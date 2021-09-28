@@ -1,0 +1,14 @@
+.logoutBtn{
+    position: absolute !important;
+    right: 3px;
+    top : 3px;
+    border-radius: 20px !important;
+    z-index: 5;
+}
+.logo{
+    position: absolute;
+    top : 10px;
+    left :10px;
+    cursor :pointer;
+    z-index: 5;
+}

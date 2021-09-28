@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Cuprum&family=Orbitron&display=swap');
+.home{
+height : 100vh;
+background-color: #000000;
+background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
+text-align: center;
+}
+.title {
+    padding: 150px 0;
+}
+.homeTitle1{
+    color : #ffffff;
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 4rem;
+}
+.homeTitle2{
+    color : #ffffff;
+    margin-top: 30px;
+    font-family: 'Orbitron', sans-serif;
+}
+.signinBtn {
+    padding : 10px 40px 5px 40px !important;
+    border-radius: 30px !important;
+}

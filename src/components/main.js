@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import './app.css';
 import {Switch,Route,Redirect,withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
-import Home from './components/home/home';
-import Header from './components/header/header';
-import {Button} from '@mui/material';
-import {Link} from 'react-router-dom';
+import Home from './home/home';
+import Header from './header/header';
 
-class App extends Component{
+class Main extends Component{
     render(){
 
         // const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -22,21 +19,11 @@ class App extends Component{
         // );
 
         return(
-            <div>
-                <Button size="large"  
-                color="primary" 
-                className = "logoutBtn"
-                onClick = {()=>{}} 
-                >
-                    Log Out
-                </Button>
-                <Link to="/home">
-                <img src="/assets/logo.png" alt="Logo" height="60px" width ="60px" className="logo"/>
-                </Link>
+            <div className="main">
                 <Header/>
                 <Switch>
                     <Route path='/home' component={Home}/>
-                    {/* <Route path='/aboutapp' component={About}/> */}
+                    <Route path='/aboutapp' component={About}/>
                     <Redirect to='/home'/>
                 </Switch>
             </div>
@@ -44,5 +31,5 @@ class App extends Component{
     }
 }
 
-export default App;
+export default Main;
 
