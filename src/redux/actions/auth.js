@@ -29,15 +29,15 @@ export const getAccount = ()=>async(dispatch)=>{
 
 //check user is existing or new from blockchain data
 const checkUser = ()=>{
-    
+    signUp();
 }
 
 //register the new user
-const newUser = ()=>{
+const signUp = ()=>{
 
 }
 
-//
+//signin user
 const signin = ()=>{
 
 }

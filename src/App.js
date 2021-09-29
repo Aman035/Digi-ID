@@ -20,20 +20,20 @@ const mapDispatchToProps = (dispatch) => ({
 class App extends Component{
     render(){
 
-        // const PrivateRoute = ({ component: Component, ...rest }) => (
-        //     <Route {...rest} render={(props) => (
-        //       this.props.signin.signed
-        //         ? <Component {...props} />
-        //         : <Redirect to={{
-        //             pathname: '/home',
-        //             state: { from: props.location }
-        //           }} />
-        //     )} />
-        // );
+        const PrivateRoute = ({ component: Component, ...rest }) => (
+            <Route {...rest} render={(props) => (
+              this.props.Auth.isAuthenticated
+                ? <Component {...props} />
+                : <Redirect to={{
+                    pathname: '/home',
+                    state: { from: props.location }
+                  }} />
+            )} />
+        );
 
         return(
             <div>
-                {!this.props.Auth.isAuthenticated?
+                {this.props.Auth.isAuthenticated?
                     <Button size="large"  
                     color="primary" 
                     className = "logoutBtn"
