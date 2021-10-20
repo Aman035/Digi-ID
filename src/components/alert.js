@@ -10,11 +10,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 const AlertComp = (props)=> {
 
     const [open, setOpen] = React.useState(true);
-
-    const handleClick = () => {
-      setOpen(true);
-    };
-  
     const handleClose = () => {
       setOpen(false);
     };
