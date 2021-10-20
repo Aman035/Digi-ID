@@ -5,9 +5,13 @@ import { connect } from 'react-redux';
 import Home from './components/home/home';
 import Header from './components/header/header';
 import About from './components/about/about';
+import NewId from './components/newId/newId';
+import AllId from './components/id/allId';
+import Issuer from './components/issuer/issuer';
 import {Button} from '@mui/material';
 import {Link} from 'react-router-dom';
 import {logout} from './redux/actions/auth';
+
 const mapStateToProps = state => {
     return {
       Auth : state.Auth
@@ -50,6 +54,9 @@ class App extends Component{
                 <Switch>
                     <Route path='/home' component={Home}/>
                     <Route path='/about' component={About}/>
+                    <PrivateRoute path='/newid' component={NewId}/>
+                    <PrivateRoute path='/allid' component={AllId}/>
+                    <PrivateRoute path='/issuer' component={Issuer}/>
                     <Redirect to='/home'/>
                 </Switch>
             </div>
