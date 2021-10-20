@@ -1,5 +1,7 @@
 import * as ActionTypes from '../actions/actionTypes';
 
+//Handle Login And Authentication 
+//Also contains all the info about user info
 const Auth = (state = {
         isLoading: false,
         isAuthenticated: false,
