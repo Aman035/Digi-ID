@@ -4,20 +4,21 @@ const Auth = (state = {
         isLoading: false,
         isAuthenticated: false,
         user: null,
-        errMess: null,
+        err: null,
         userinfo : null
     }, action) => {
     switch (action.type) {
         case ActionTypes.LOADING:
             return {...state,
-                isLoading : true
+                isLoading : true,
+                err : null
             };
         case ActionTypes.SIGNIN_SUCCESS:
             return {...state,
                 isLoading: false,
                 isAuthenticated: true,
                 user: action.user,
-                errMess: null,
+                err: null,
                 userinfo : action.info
             };
         case ActionTypes.SIGNIN_FAIL:
@@ -25,14 +26,14 @@ const Auth = (state = {
                 isLoading: false,
                 isAuthenticated: false,
                 user: null,
-                errMess: action.err,
+                err: action.err,
                 userinfo : null
             };
         case ActionTypes.LOGOUT:
             return {...state,
                 isAuthenticated: false,
                 user: null,
-                errMess: null,
+                err: null,
                 userinfo : null
             };
         default:

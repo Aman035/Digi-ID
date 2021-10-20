@@ -1,9 +1,11 @@
 import * as ActionTypes from './actionTypes';
 import detectEthereumProvider from '@metamask/detect-provider'
+import Identity from '../../Identity';
 
 //try connecting to metamask wallet and get account address
-export const getAccount = ()=>async(dispatch)=>{
+export const trySignin = ()=>async(dispatch)=>{
 
+    dispatch(loading());
     const provider = await detectEthereumProvider();
     if(provider == null){
         dispatch(signinError("Metamask Not Installed"));
@@ -22,43 +24,72 @@ export const getAccount = ()=>async(dispatch)=>{
                 }
             
                 let account = await window.ethereum.request({ method: 'eth_accounts' });
-                checkUser(account[0]);
+                await checkNewUser(account[0]) ? dispatch(signUp(account[0])) : dispatch(signIn(account[0]));
         }
     }       
 }
 
 //check user is existing or new from blockchain data
-const checkUser = ()=>{
-    signUp();
+const checkNewUser = async(account)=>{
+    try{
+        const User = await Identity.methods.UserDetail(account).call();
+        return User.Registered ? false : true;
+    }
+    catch(err){
+        return false;
+    }
 }
 
 //register the new user
-const signUp = ()=>{
+const signUp = (account) => async (dispatch)=>{
+    try{
+        await Identity.methods.registerUser().send({from : account});
+        dispatch(signIn(account));
+    }
+    catch(err){
+        dispatch(signinError(err.message));
+    }
+}
 
+//get User's Info
+const getUserInfo = async(account)=>{
+    const Info = await Identity.methods.UserDetail(account).call();
+    const identity = [];
+    for( let i = 0; i< Info.IdCount ; i++){
+        const id = await identity.methods.getId(i , account);
+        identity.push(id);
+    }
+    Info.identity = identity;
+    return Info;
 }
 
 //signin user
-const signin = ()=>{
-
+const signIn = (account)=>async(dispatch)=>{
+    try{
+        const info = await getUserInfo(account);
+        dispatch(signinSuccess(account , info));
+    }
+    catch(err){
+        dispatch(signinError(err.message));
+    }
+    
 }
 
-const loading = ()=>(dispatch)=>{
-    dispatch(()=>{ 
-        return {
-            type : ActionTypes.LOADING
-    }});
+const loading = ()=>{
+    return {
+        type : ActionTypes.LOADING
+    }
 }
 
-const signinSuccess = (user , info)=>(dispatch)=>{
-    dispatch(()=>{ 
-        return {
-            type : ActionTypes.SIGNIN_SUCCESS,
-            user : user,
-            info : info
-    }});
+const signinSuccess = (user , info)=>{
+    return {
+        type : ActionTypes.SIGNIN_SUCCESS,
+        user : user,
+        info : info
+    };
 }
 
-const signinError = (err)=>{
+export const signinError = (err)=>{
         return {
             type : ActionTypes.SIGNIN_FAIL,
             err : err

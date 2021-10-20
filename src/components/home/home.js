@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './home.css';
-import { connect } from 'react-redux';
+import AlertComp from '../alert';
 import Animation from './animation';
+import { connect } from 'react-redux';
 import {Button} from '@mui/material';
-import {getAccount} from '../../redux/actions/auth';
+import { trySignin } from '../../redux/actions/auth';
 const mapStateToProps = state => {
     return {
       Auth : state.Auth
     }
 }
 const mapDispatchToProps = (dispatch) => ({
-    getAccount : ()=>dispatch(getAccount())
+    signIn : ()=>dispatch(trySignin())
 });
 
 const Home = (props)=>{
+
     return(
         <div className="home">
             <Animation/>
@@ -22,9 +24,17 @@ const Home = (props)=>{
                 <h4 className="homeTitle2">Identity management solutions for a modern world</h4>
             </div>
             {!props.Auth.isAuthenticated?
-            <Button variant = "outlined" color="primary" className="signinBtn" onClick = {props.getAccount}>
-                <h5>Sign In</h5>
-            </Button>
+                <Button variant = "outlined" color="primary" className="signinBtn" onClick = {props.signIn}>
+                    <h5>Sign In</h5>
+                </Button>
+            :
+            null}
+            {/* {newUser?
+                <AlertComp message= "New User Account Detected" severity="info"/>
+            :
+            null} */}
+            {props.Auth.err?
+                <AlertComp message={props.Auth.err} severity="error"/>
             :
             null}
         </div>
