@@ -1,24 +1,24 @@
 import * as ActionTypes from '../actions/actionTypes';
 
-//Handle all issuers data
-const Issuer = (state = {
+//Handle all user data
+const User = (state = {
         loading: false,
-        info: [],
+        info: null,
         err: null
     }, action) => {
     switch (action.type) {
-        case ActionTypes.ISSUER_LOADING:
+        case ActionTypes.USERINFO_LOADING:
             return {...state,
                 loading : true,
                 err : null
             };
-        case ActionTypes.ISSUER_SUCCESS:
+        case ActionTypes.USERINFO_SUCCESS:
             return {...state,
                 loading: false,
                 info: action.info,
                 err: null
             };
-        case ActionTypes.ISSUER_FAIL:
+        case ActionTypes.USERINFO_FAIL:
             return {...state,
                 loading: false,
                 err: action.err
@@ -27,4 +27,4 @@ const Issuer = (state = {
             return state
     }
 }
-export default Issuer;
+export default User;

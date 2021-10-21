@@ -1,42 +1,38 @@
 import * as ActionTypes from '../actions/actionTypes';
 
-//Handle Login And Authentication 
-//Also contains all the info about user info
+//Handle user authentication
 const Auth = (state = {
-        isLoading: false,
+        loading: false,
         isAuthenticated: false,
-        user: null,
+        user : null,
         err: null,
-        userinfo : null
     }, action) => {
     switch (action.type) {
-        case ActionTypes.LOADING:
+        case ActionTypes.AUTH_LOADING:
             return {...state,
-                isLoading : true,
+                loading : true,
                 err : null
             };
-        case ActionTypes.SIGNIN_SUCCESS:
+        case ActionTypes.AUTH_SUCCESS:
             return {...state,
-                isLoading: false,
+                loading: false,
                 isAuthenticated: true,
                 user: action.user,
                 err: null,
-                userinfo : action.info
             };
-        case ActionTypes.SIGNIN_FAIL:
+        case ActionTypes.AUTH_FAIL:
             return {...state,
-                isLoading: false,
+                loading: false,
                 isAuthenticated: false,
                 user: null,
                 err: action.err,
-                userinfo : null
             };
-        case ActionTypes.LOGOUT:
+        
+        case ActionTypes.AUTH_LOGOUT:
             return {...state,
                 isAuthenticated: false,
                 user: null,
-                err: null,
-                userinfo : null
+                err: null
             };
         default:
             return state

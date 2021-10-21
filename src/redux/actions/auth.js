@@ -1,103 +1,95 @@
 import * as ActionTypes from './actionTypes';
 import detectEthereumProvider from '@metamask/detect-provider'
 import Identity from '../../Identity';
+import { updateIssuerInfo } from './issuer';
+import { alert } from './alert';
+import { updateUserInfo } from './user';
 
 //try connecting to metamask wallet and get account address
 export const trySignin = ()=>async(dispatch)=>{
 
-    dispatch(loading());
+    dispatch(authLoading());
+
+    let err = "";
     const provider = await detectEthereumProvider();
-    if(provider == null){
-        dispatch(signinError("Metamask Not Installed"));
-    }
+
+    if(provider == null)
+        err = "Metamask Not Installed";
     else{
-        if(provider !== window.ethereum){
-            dispatch(signinError("We Think Multiple Wallets are connected. Please disable other wallets."));
-        }
-        else{
-                try{
-                    await window.ethereum.request({ method: 'eth_requestAccounts'})
-                }
-                catch(err){
-                    dispatch(signinError("Can't Connect To MetaMask"));
-                    return;
-                }
-            
-                let account = await window.ethereum.request({ method: 'eth_accounts' });
-                await checkNewUser(account[0]) ? dispatch(signUp(account[0])) : dispatch(signIn(account[0]));
-        }
-    }       
+        if(provider !== window.ethereum)
+            err = "We Think Multiple Wallets are connected. Please disable other wallets.";
+    }
+
+    if(err !== ""){
+        dispatch(authError(err));
+        dispatch(alert(err , "error"));
+        return;
+    }
+
+    try{
+        await window.ethereum.request({ method: 'eth_requestAccounts'})
+    }
+    catch(err){
+        dispatch(authError("Can't Connect To MetaMask"));
+        dispatch(alert("Can't Connect To MetaMask" , "error"));
+        return;
+    }
+
+    let account = await window.ethereum.request({ method: 'eth_accounts' });
+
+    try{
+        await checkNewUser(account[0]) ? await dispatch(signUp(account[0])) : await dispatch(signIn(account[0]));
+    }
+    catch(err){
+        dispatch(authError(err.message));
+        dispatch(alert(err.message , "error"));
+    }
+        
 }
 
 //check user is existing or new from blockchain data
 const checkNewUser = async(account)=>{
-    try{
-        const User = await Identity.methods.UserDetail(account).call();
-        return User.Registered ? false : true;
-    }
-    catch(err){
-        return false;
-    }
+    const User = await Identity.methods.UserDetail(account).call();
+    return User.Registered ? false : true;
 }
 
 //register the new user
 const signUp = (account) => async (dispatch)=>{
-    try{
-        await Identity.methods.registerUser().send({from : account});
-        dispatch(signIn(account));
-    }
-    catch(err){
-        dispatch(signinError(err.message));
-    }
-}
-
-//get User's Info
-const getUserInfo = async(account)=>{
-    const Info = await Identity.methods.UserDetail(account).call();
-    const identity = [];
-    for( let i = 0; i< Info.IdCount ; i++){
-        const id = await identity.methods.getId(i , account);
-        identity.push(id);
-    }
-    Info.identity = identity;
-    return Info;
+    await Identity.methods.registerUser().send({from : account});
+    await dispatch(signIn(account));
 }
 
 //signin user
 const signIn = (account)=>async(dispatch)=>{
-    try{
-        const info = await getUserInfo(account);
-        dispatch(signinSuccess(account , info));
-    }
-    catch(err){
-        dispatch(signinError(err.message));
-    }
-    
+    //Some Fancy Auth Method
+    await dispatch(updateIssuerInfo());
+    await dispatch(updateUserInfo(account));
+    dispatch(authSuccess(account));
+    dispatch(alert("Sign In Successfull" , "success"));
 }
 
-const loading = ()=>{
+const authLoading = ()=>{
     return {
-        type : ActionTypes.LOADING
+        type : ActionTypes.AUTH_LOADING
     }
 }
 
-const signinSuccess = (user , info)=>{
+const authSuccess = (user)=>{
     return {
-        type : ActionTypes.SIGNIN_SUCCESS,
-        user : user,
-        info : info
+        type : ActionTypes.AUTH_SUCCESS,
+        user : user
     };
 }
 
-export const signinError = (err)=>{
-        return {
-            type : ActionTypes.SIGNIN_FAIL,
-            err : err
+const authError = (err)=>{
+    return {
+        type : ActionTypes.AUTH_FAIL,
+        err : err
     }
 }
 
-export const logout = ()=>{ 
-        return {
-            type : ActionTypes.LOGOUT
-    };
+export const authLogout = ()=>{
+    return{
+        type : ActionTypes.AUTH_LOGOUT
+    }
 }
