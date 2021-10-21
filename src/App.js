@@ -7,10 +7,11 @@ import Header from './components/header/header';
 import About from './components/about/about';
 import NewId from './components/newId/newId';
 import AllId from './components/id/allId';
-import Issuer from './components/issuer/issuer';
+import Issuer from './components/issuer/profile';
+import AlertComp from './components/alert';
 import {Button} from '@mui/material';
 import {Link} from 'react-router-dom';
-import {logout} from './redux/actions/auth';
+import {authLogout} from './redux/actions/auth';
 
 const mapStateToProps = state => {
     return {
@@ -18,7 +19,7 @@ const mapStateToProps = state => {
     }
 }
 const mapDispatchToProps = (dispatch) => ({
-    logout : () => dispatch(logout()),
+    logout : () => dispatch(authLogout()),
   });
 
 class App extends Component{
@@ -36,7 +37,7 @@ class App extends Component{
         );
 
         return(
-            <div>
+            <div className="app">
                 {this.props.Auth.isAuthenticated?
                     <Button size="large"  
                     color="primary" 
@@ -59,7 +60,8 @@ class App extends Component{
                     <PrivateRoute path='/issuer' component={Issuer}/>
                     <Redirect to='/home'/>
                 </Switch>
-            </div>
+                <AlertComp className="alert"/>
+                </div>
         )
     }
 }

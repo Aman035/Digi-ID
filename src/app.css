@@ -1,3 +1,9 @@
+.app{
+    background-color: #ebeae8 !important;
+    background-image: url("https://www.transparenttextures.com/patterns/brilliant.png");
+    min-height: 100vh;
+}
+
 .logoutBtn{
     position: absolute !important;
     right: 3px;
@@ -5,10 +11,14 @@
     border-radius: 20px !important;
     z-index: 5;
 }
+
 .logo{
     position: absolute;
     top : 10px;
     left :10px;
     cursor :pointer;
     z-index: 5;
+}
+.alert{
+    z-index : 5
 }
