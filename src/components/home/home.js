@@ -1,6 +1,5 @@
 import React from 'react';
 import './home.css';
-import AlertComp from '../alert';
 import Animation from './animation';
 import { connect } from 'react-redux';
 import {Button} from '@mui/material';
@@ -27,14 +26,6 @@ const Home = (props)=>{
                 <Button variant = "outlined" color="primary" className="signinBtn" onClick = {props.signIn}>
                     <h5>Sign In</h5>
                 </Button>
-            :
-            null}
-            {/* {newUser?
-                <AlertComp message= "New User Account Detected" severity="info"/>
-            :
-            null} */}
-            {props.Auth.err?
-                <AlertComp message={props.Auth.err} severity="error"/>
             :
             null}
         </div>

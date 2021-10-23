@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cuprum&family=Orbitron&display=swap');
 .home{
-height : 100vh;
+min-height : 100vh;
 background-color: #000000;
 background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
 text-align: center;
