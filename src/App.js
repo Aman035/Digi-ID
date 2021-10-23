@@ -8,10 +8,13 @@ import About from './components/about/about';
 import NewId from './components/newId/newId';
 import AllId from './components/id/allId';
 import Issuer from './components/issuer/profile';
+import VerifyIssuer from './components/verifyIssuer/verify';
 import AlertComp from './components/alert';
-import {Button} from '@mui/material';
-import {Link} from 'react-router-dom';
-import {authLogout} from './redux/actions/auth';
+import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { authLogout } from './redux/actions/auth';
+import { updateIssuerInfo } from './redux/actions/issuer';
+import { updateRequestInfo } from './redux/actions/issuerRequest';
 
 const mapStateToProps = state => {
     return {
@@ -20,12 +23,31 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = (dispatch) => ({
     logout : () => dispatch(authLogout()),
+    updateIssuerInfo : () => dispatch(updateIssuerInfo()),
+    updateRequestInfo : () => dispatch(updateRequestInfo()),
   });
 
 class App extends Component{
+
+    componentDidMount(){
+        this.props.updateIssuerInfo();
+        this.props.updateRequestInfo()
+    }
+
     render(){
 
         const PrivateRoute = ({ component: Component, ...rest }) => (
+            <Route {...rest} render={(props) => (
+              this.props.Auth.isAuthenticated
+                ? <Component {...props} />
+                : <Redirect to={{
+                    pathname: '/home',
+                    state: { from: props.location }
+                  }} />
+            )} />
+        );
+
+        const SuperPrivateRoute = ({ component: Component, ...rest }) => (
             <Route {...rest} render={(props) => (
               this.props.Auth.isAuthenticated
                 ? <Component {...props} />
@@ -44,7 +66,7 @@ class App extends Component{
                     className = "logoutBtn"
                     onClick = {this.props.logout} 
                     >
-                        Log Out
+                        <b>Log Out</b>
                     </Button>
                 :
                 null}
@@ -58,6 +80,7 @@ class App extends Component{
                     <PrivateRoute path='/newid' component={NewId}/>
                     <PrivateRoute path='/allid' component={AllId}/>
                     <PrivateRoute path='/issuer' component={Issuer}/>
+                    <SuperPrivateRoute path='/verifyissuer' component={VerifyIssuer}/>
                     <Redirect to='/home'/>
                 </Switch>
                 <AlertComp className="alert"/>
