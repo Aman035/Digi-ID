@@ -11,5 +11,9 @@ export const ISSUER_LOADING = 'ISSUER_LOADING';
 export const ISSUER_SUCCESS = 'ISSUER_SUCCESS';
 export const ISSUER_FAIL = 'ISSUER_FAIL';
 
+export const REQUEST_LOADING = 'REQUEST_LOADING';
+export const REQUEST_SUCCESS = 'REQUEST_SUCCESS';
+export const REQUEST_FAIL = 'REQUEST_FAIL';
+
 export const ADD_ALERT = 'ADD_ALERT';
 export const RESET_ALERT = 'RESET_ALERT';

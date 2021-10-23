@@ -1,7 +1,6 @@
 import * as ActionTypes from './actionTypes';
 import detectEthereumProvider from '@metamask/detect-provider'
 import Identity from '../../Identity';
-import { updateIssuerInfo } from './issuer';
 import { alert } from './alert';
 import { updateUserInfo } from './user';
 
@@ -62,7 +61,6 @@ const signUp = (account) => async (dispatch)=>{
 //signin user
 const signIn = (account)=>async(dispatch)=>{
     //Some Fancy Auth Method
-    await dispatch(updateIssuerInfo());
     await dispatch(updateUserInfo(account));
     dispatch(authSuccess(account));
     dispatch(alert("Sign In Successfull" , "success"));
