@@ -1,3 +1,14 @@
-/* .issuer{
-    height : 100vh;
-} */
+.issuer{
+    padding : 100px 10% 10px;
+    text-align: center;
+}
+.detailrow{
+    padding : 20px 0 !important;
+    text-align: left;
+}
+.detail{
+    padding : 30px 0 10px;
+}
+.requestrow{
+    padding : 60px 0 0 !important;
+}

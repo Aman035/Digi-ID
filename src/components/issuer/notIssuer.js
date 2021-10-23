@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import './notIssuer.css';
+import { requestIssuerAccount } from '../../redux/actions/user';
 
 const validationSchema = yup.object({
 	identity: yup.string().required('Identity Name is required'),
@@ -14,6 +15,7 @@ const validationSchema = yup.object({
 
 const mapDispatchToProps = (dispatch) => ({
 	Alert: (message, severity) => dispatch(alert(message, severity)),
+	RequestIssuerAccount : (account , desc , id) => dispatch(requestIssuerAccount(account , desc , id))
 });
 
 const NotIssuer = (props) => {
@@ -27,14 +29,14 @@ const NotIssuer = (props) => {
 			description: '',
 		},
 		validationSchema: validationSchema,
-		onSubmit: (values) => {
-			console.log(values);
+		onSubmit: async (values) => {
+			await props.RequestIssuerAccount(props.address ,values.description , values.identity);
 		},
 	});
 
 	return (
 		<div className="register">
-			<form onSubmit={formik.handleSubmit}>
+			<form>
 				<TextField
 					className="text"
 					fullWidth
@@ -69,7 +71,7 @@ const NotIssuer = (props) => {
 					variant="contained"
 					color="primary"
 					className="signinBtn"
-					type="submit"
+					onClick = {formik.handleSubmit}
 				>
 					Request Issuer Account
 				</Button>

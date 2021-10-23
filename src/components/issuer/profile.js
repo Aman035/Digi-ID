@@ -7,21 +7,21 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
     return {
-      Auth : state.Auth
+      User : state.User
     }
 }
 
 const Profile = (props)=>{
     return (
-        <div className="issuer">
-            {props.Auth.userinfo.issuer.Status === "0"?
-                <NotIssuer/>
+        <div className="profile">
+            {!props.User.info.issuer.status === "0"?
+                <NotIssuer address={props.User.info.address}/>
                 :
                 <div>
-                    {props.Auth.userinfo.issuer.Status === "1"?
+                    {!props.User.info.issuer.status === "1"?
                         <PendingIssuer/>
                         :
-                        <Issuer/>
+                        <Issuer issuer = {props.User.info.issuer}/>
                     }
                 </div>
             }
