@@ -5,7 +5,7 @@ let instance;
 if(window.web3 !== undefined){
     let web3 = new Web3(window.web3.currentProvider);
     //deploy contract instance
-    instance = new web3.eth.Contract(Identity.abi,'0x0e13f14a7E0c307E288eE34F15c28850d8ac8449');
+    instance = new web3.eth.Contract(Identity.abi,'0x920223824262C11B96b30F0809F0c6A930f1C7bE');
 }
 else
     instance = null;
