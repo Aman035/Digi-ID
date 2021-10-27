@@ -2,6 +2,11 @@ import * as ActionTypes from './actionTypes';
 import Identity from '../../Identity';
 import { alert} from './alert';
 
+async function delay(ms) {
+    // return await for better async stack trace support in case of errors.
+    return await new Promise(resolve => setTimeout(resolve, ms));
+  }
+
 //update user info in redux store
 export const updateUserInfo = (account) => async(dispatch)=>{
     dispatch(userinfoLoading());
@@ -12,6 +17,8 @@ export const updateUserInfo = (account) => async(dispatch)=>{
     catch(err){
         dispatch(userinfoError(err.message));
     }
+    await delay(10000);
+    dispatch(updateUserInfo(account));
 }
 
 //get User's Info from blockchain
@@ -64,7 +71,6 @@ export const requestIssuerAccount =
     catch(err){
         dispatch(alert(err.message , "error"));
     }
-    await dispatch(updateUserInfo(account));
 }
 
 const userinfoLoading = ()=>{

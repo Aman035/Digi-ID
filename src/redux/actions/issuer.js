@@ -1,26 +1,34 @@
 import * as ActionTypes from './actionTypes';
 import Identity from '../../Identity';
 
+async function delay(ms) {
+    // return await for better async stack trace support in case of errors.
+    return await new Promise(resolve => setTimeout(resolve, ms));
+  }
+
 //update all issuers info in redux store
 export const updateIssuerInfo = () => async (dispatch) => {
     dispatch(issuerLoading());
     try{
-        const info = await getIssuerInfo();
+        const info = await getIssuerInfo(0 ,[]);
         dispatch(issuerSuccess(info));
     }
     catch(err){
         dispatch(issuerError(err.message));
     }
+    await delay(10000);
+    dispatch(updateIssuerInfo());
 
 }
 //get all issuers data from blockchain
-const getIssuerInfo = async()=>{
-    const issuerCnt = await Identity.methods.getTotalIssuers().call();
-    const issuers = [];
-    for(let i = 0;i< issuerCnt ;i++){
-        const issuer = await Identity.methods.Issuer(i).call();
+const getIssuerInfo = async(num , issuers)=>{
+    try{
+        const issuer = await Identity.methods.Issuer(num).call();
         issuers.push(issuer);
-    return issuers;           
+        return await getIssuerInfo(num+1 , issuers);
+    }
+    catch(err){
+        return issuers;
     }
 }
 

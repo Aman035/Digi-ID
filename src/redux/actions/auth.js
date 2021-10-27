@@ -61,7 +61,7 @@ const signUp = (account) => async (dispatch)=>{
 //signin user
 const signIn = (account)=>async(dispatch)=>{
     //Some Fancy Auth Method
-    await dispatch(updateUserInfo(account));
+    dispatch(updateUserInfo(account));
     dispatch(authSuccess(account));
     dispatch(alert("Sign In Successfull" , "success"));
 }
