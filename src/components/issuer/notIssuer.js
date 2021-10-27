@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { alert } from '../../redux/actions/alert';
 import { useFormik } from 'formik';
@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import './notIssuer.css';
 import { requestIssuerAccount } from '../../redux/actions/user';
+import Load from '../loading/loading';
 
 const validationSchema = yup.object({
 	identity: yup.string().required('Identity Name is required'),
@@ -19,6 +20,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const NotIssuer = (props) => {
+	const [load , setLoad] = useState(false);
+
 	useEffect(() => {
 		props.Alert('This account is not registered as an Issuer', 'info');
 	}, [props]);
@@ -30,12 +33,15 @@ const NotIssuer = (props) => {
 		},
 		validationSchema: validationSchema,
 		onSubmit: async (values) => {
+			setLoad(true);
 			await props.RequestIssuerAccount(props.address ,values.description , values.identity);
+			setLoad(false);
 		},
 	});
 
 	return (
 		<div className="register">
+			{load?<Load/>:null}
 			<form>
 				<TextField
 					className="text"

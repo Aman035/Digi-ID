@@ -14,11 +14,11 @@ const mapStateToProps = state => {
 const Profile = (props)=>{
     return (
         <div className="profile">
-            {!props.User.info.issuer.status === "0"?
+            {props.User.info.issuer.status === "0"?
                 <NotIssuer address={props.User.info.address}/>
                 :
                 <div>
-                    {!props.User.info.issuer.status === "1"?
+                    {props.User.info.issuer.status === "1"?
                         <PendingIssuer/>
                         :
                         <Issuer issuer = {props.User.info.issuer}/>

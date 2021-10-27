@@ -31,17 +31,17 @@ const Issuer = (props)=>{
                 </div>
                 <div className="row requestrow">
                     <div className="col-12 col-lg-4 p-2">
-                        <Button variant="contained" color="success" onClick={()=>setReqState(2)}>
+                        <Button variant={reqState === 2? "contained": "outlined"} color="success" onClick={()=>setReqState(2)}>
                             Accepted Requests
                         </Button>
                     </div>
                     <div className="col-12 col-lg-4 p-2">
-                        <Button variant="contained" color="primary" onClick={()=>setReqState(1)}>
+                        <Button variant={reqState === 1? "contained": "outlined"} color="primary" onClick={()=>setReqState(1)}>
                             Pending Requests
                         </Button>
                     </div>
                     <div className="col-12 col-lg-4 p-2">
-                        <Button variant="contained" color="error" onClick={()=>setReqState(0)}>
+                        <Button variant={reqState === 0? "contained": "outlined"} color="error" onClick={()=>setReqState(0)}>
                             Rejected Requests
                         </Button>
                     </div>
