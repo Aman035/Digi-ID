@@ -17,8 +17,8 @@
     top : 10px;
     left :10px;
     cursor :pointer;
-    z-index: 5;
+    z-index: 15;
 }
 .alert{
-    z-index : 5
+    z-index : 15
 }

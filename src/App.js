@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import Home from './components/home/home';
 import Header from './components/header/header';
 import About from './components/about/about';
-import NewId from './components/newId/newId';
-import AllId from './components/id/allId';
+import Profile from './components/profile/profile';
+import NewId from './components/profile/newid';
+import ModifyId from './components/profile/modifyid';
 import Issuer from './components/issuer/profile';
 import VerifyIssuer from './components/verifyIssuer/verify';
 import AlertComp from './components/alert';
@@ -15,6 +16,7 @@ import { Link } from 'react-router-dom';
 import { authLogout } from './redux/actions/auth';
 import { updateIssuerInfo } from './redux/actions/issuer';
 import { updateRequestInfo } from './redux/actions/issuerRequest';
+import Loading from './components/loading/loading';
 
 const mapStateToProps = state => {
     return {
@@ -31,10 +33,16 @@ class App extends Component{
 
     componentDidMount(){
         this.props.updateIssuerInfo();
-        this.props.updateRequestInfo()
+        this.props.updateRequestInfo();
     }
 
     render(){
+
+        if(window.ethereum !== undefined && this.props.Auth.isAuthenticated){
+            window.ethereum.on('accountsChanged', (accounts)=>{
+                window.location.reload();
+            });
+        }
 
         const PrivateRoute = ({ component: Component, ...rest }) => (
             <Route {...rest} render={(props) => (
@@ -60,6 +68,10 @@ class App extends Component{
 
         return(
             <div className="app">
+                {this.props.Auth.loading?
+                    <Loading/>
+                :null
+                }
                 {this.props.Auth.isAuthenticated?
                     <Button size="large"  
                     color="primary" 
@@ -78,7 +90,8 @@ class App extends Component{
                     <Route path='/home' component={Home}/>
                     <Route path='/about' component={About}/>
                     <PrivateRoute path='/newid' component={NewId}/>
-                    <PrivateRoute path='/allid' component={AllId}/>
+                    <PrivateRoute path='/modifyid' component={ModifyId}/>
+                    <PrivateRoute path='/profile' component={Profile}/>
                     <PrivateRoute path='/issuer' component={Issuer}/>
                     <SuperPrivateRoute path='/verifyissuer' component={VerifyIssuer}/>
                     <Redirect to='/home'/>
