@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Noticia+Text&display=swap');
 .app{
     background-color: #ebeae8 !important;
     background-image: url("https://www.transparenttextures.com/patterns/brilliant.png");
     min-height: 100vh;
 }
-
+p,h4,h5,h6,div{
+    font-family: 'Noticia Text', serif;
+}
 .logoutBtn{
     position: absolute !important;
     right: 3px;
@@ -17,8 +20,14 @@
     top : 10px;
     left :10px;
     cursor :pointer;
-    z-index: 15;
+    z-index: 5;
 }
 .alert{
     z-index : 15
 }
+
+@media only screen and (max-width: 600px) {
+    body {
+      text-align: center !important;
+    }
+  }
