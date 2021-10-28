@@ -37,7 +37,14 @@ export const trySignin = ()=>async(dispatch)=>{
     let account = await window.ethereum.request({ method: 'eth_accounts' });
 
     try{
-        await checkNewUser(account[0]) ? await dispatch(signUp(account[0])) : await dispatch(signIn(account[0]));
+        const newUser = checkNewUser(account[0]);
+        if(newUser === true){
+            dispatch(alert("New User Account Detected" , "info"));
+            await dispatch(signUp(account[0]));
+        }
+        else{
+            await dispatch(signIn(account[0]));
+        }
     }
     catch(err){
         dispatch(authError(err.message));
