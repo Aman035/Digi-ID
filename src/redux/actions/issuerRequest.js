@@ -1,6 +1,7 @@
 import * as ActionTypes from './actionTypes';
 import Identity from '../../Identity';
 import {alert} from './alert';
+import { REFRESH_RATE } from '../../helper';
 
 async function delay(ms) {
     // return await for better async stack trace support in case of errors.
@@ -17,7 +18,7 @@ export const updateRequestInfo = () => async dispatch => {
     catch(err){
         dispatch(requestError(err.message));
     }
-    await delay(10000);
+    await delay(REFRESH_RATE);
     dispatch(updateRequestInfo());
 }
 

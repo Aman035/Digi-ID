@@ -1,5 +1,6 @@
 import * as ActionTypes from './actionTypes';
 import Identity from '../../Identity';
+import { REFRESH_RATE } from '../../helper';
 
 async function delay(ms) {
     // return await for better async stack trace support in case of errors.
@@ -10,21 +11,22 @@ async function delay(ms) {
 export const updateIssuerInfo = () => async (dispatch) => {
     dispatch(issuerLoading());
     try{
-        const info = await getIssuerInfo(0 ,[]);
+        const issuers = new Map();
+        const info = await getIssuerInfo(0 ,issuers);
         dispatch(issuerSuccess(info));
     }
     catch(err){
         dispatch(issuerError(err.message));
     }
-    await delay(10000);
+    await delay(REFRESH_RATE);
     dispatch(updateIssuerInfo());
 
 }
 //get all issuers data from blockchain
 const getIssuerInfo = async(num , issuers)=>{
     try{
-        const issuer = await Identity.methods.Issuer(num).call();
-        issuers.push(issuer);
+        const issuerData = await Identity.methods.Issuer(num).call();
+        issuers.set(issuerData.IssueId,issuerData.IssuerAddress);
         return await getIssuerInfo(num+1 , issuers);
     }
     catch(err){

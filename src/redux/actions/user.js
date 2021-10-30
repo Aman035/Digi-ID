@@ -1,6 +1,7 @@
 import * as ActionTypes from './actionTypes';
 import Identity from '../../Identity';
 import { alert} from './alert';
+import { REFRESH_RATE } from '../../helper';
 
 async function delay(ms) {
     // return await for better async stack trace support in case of errors.
@@ -17,7 +18,7 @@ export const updateUserInfo = (account) => async(dispatch)=>{
     catch(err){
         dispatch(userinfoError(err.message));
     }
-    await delay(10000);
+    await delay(REFRESH_RATE);
     dispatch(updateUserInfo(account));
 }
 
@@ -71,6 +72,10 @@ export const requestIssuerAccount =
     catch(err){
         dispatch(alert(err.message , "error"));
     }
+}
+
+export const addId = (issuer , buffer , account) => async dispatch =>{
+    console.log(issuer , buffer , account);
 }
 
 const userinfoLoading = ()=>{
