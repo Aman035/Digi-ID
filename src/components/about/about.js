@@ -50,15 +50,16 @@ const About = ()=>(
         <div className="about">
             <h3><b>About Developer</b></h3>
             <p>
-            This app is solemnly developed by Aman Gupta, a Blockchain and fullStack Web Developer.
+                This app is solemnly developed by Aman Gupta, 
+                a Blockchain and fullStack Web Developer.
             </p>
             <p>
-            All the graphics have been taken from opensource 
-            sources and the developer holds no right over them.
+                All the graphics have been taken from opensource 
+                sources and the developer holds no right over them.
             </p>
             <p>
-            Inspiration has been taken from various research papers and 
-            digital identity models.
+                Inspiration has been taken from various research papers and 
+                digital identity models.
             </p>
             <p>
                 <a href="https://www.linkedin.com/in/aman-gupta-2001/" target="blank"><LinkedInIcon className="icon" sx={{fontSize : "35px"}}/></a>
