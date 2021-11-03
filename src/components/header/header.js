@@ -1,60 +1,76 @@
 import React from 'react';
 import './header.css';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SupervisorAccountRoundedIcon from '@mui/icons-material/SupervisorAccountRounded';
 import InfoIcon from '@mui/icons-material/Info';
 import AdminPanelSettingsRoundedIcon from '@mui/icons-material/AdminPanelSettingsRounded';
 import Tooltip from '@mui/material/Tooltip';
-import { Link } from 'react-router-dom';
 
-class Header extends React.Component {
-	render() {
-		return (
-			<div className="header">
-				<span className="align">
+const mapStateToProps = state => {
+    return {
+      Auth : state.Auth,
+	  IssuerRequest : state.IssuerRequest,
+	  User : state.User
+    }
+}
+
+const Header = (props)=>{
+
+	const tabs = [
+	{
+		title : "Profile",
+		link : "/profile",
+		icon : <AccountCircleIcon color="primary" fontSize="large"/>,
+		private : true
+	},
+	{
+		title : "Issuer Profile",
+		link : "/issuer",
+		icon : <SupervisorAccountRoundedIcon color="primary" fontSize="large"/>,
+		private : true
+	},
+	{
+		title : "Home",
+		link : "/home",
+		icon : <HomeRoundedIcon color="primary" fontSize="large"/>,
+		private : false
+	},
+	{
+		title : "About App & Developer",
+		link : "/about",
+		icon : <InfoIcon color="primary" fontSize="large"/>,
+		private : false
+	}]
+
+	return (
+		<div className="header">
+			<span className="align">
+				{props.Auth.isAuthenticated && props.User.info!=null && props.IssuerRequest.info!=null && props.User.info.address.toLowerCase() ===  props.IssuerRequest.info.address.toLowerCase()?
 				<div className="customNav">
 					<Tooltip title={<h6>Issuer Verification</h6>} arrow placement="right">
 						<Link to="/verifyissuer">
-							<AdminPanelSettingsRoundedIcon color="primary" fontSize="large" />
+							<AdminPanelSettingsRoundedIcon color="primary" fontSize="large"/>
 						</Link>
 					</Tooltip>
 				</div>
-				<div className="customNav">
-					<Tooltip title={<h6>Profile</h6>} arrow placement="right">
-						<Link to="/profile">
-							<AccountCircleIcon color="primary" fontSize="large" />
-						</Link>
-					</Tooltip>
-				</div>
-				<div className="customNav">
-					<Tooltip title={<h6>Issuer Profile</h6>} arrow placement="right">
-						<Link to="/issuer">
-							<SupervisorAccountRoundedIcon color="primary" fontSize="large" />
-						</Link>
-					</Tooltip>
-				</div>
-				<div className="customNav">
-					<Tooltip title={<h6>Home</h6>} arrow placement="right">
-						<Link to="/home">
-							<HomeRoundedIcon color="primary" fontSize="large" />
-						</Link>
-					</Tooltip>
-				</div>
-				<div className="customNav">
-					<Tooltip
-						title={<h6>About App & Developer</h6>}
-						arrow
-						placement="right"
-					>
-						<Link to="/about">
-							<InfoIcon color="primary" fontSize="large" />
-						</Link>
-					</Tooltip>
-				</div>
-				</span>
-			</div>
-		);
-	}
+				:null
+				}
+				{tabs.map(tab => (
+					props.Auth.isAuthenticated || (!tab.private)?
+						<div className="customNav" key={tab.title}>
+							<Tooltip title={<h6>{tab.title}</h6>} arrow placement="right">
+								<Link to={tab.link}>{tab.icon}</Link>
+							</Tooltip>
+						</div>
+					:
+					null	
+				))}
+			</span>
+		</div>
+	);
 }
-export default Header;
+
+export default connect(mapStateToProps,null)(Header);
