@@ -3,6 +3,8 @@ import detectEthereumProvider from '@metamask/detect-provider'
 import Identity from '../../Identity';
 import { alert } from './alert';
 import { updateUserInfo } from './user';
+import { updateRequestInfo } from './issuerRequest';
+import { updateIssuerInfo } from './issuer';
 
 //try connecting to metamask wallet and get account address
 export const trySignin = ()=>async(dispatch)=>{
@@ -37,7 +39,8 @@ export const trySignin = ()=>async(dispatch)=>{
     let account = await window.ethereum.request({ method: 'eth_accounts' });
 
     try{
-        const newUser = checkNewUser(account[0]);
+        const newUser = await checkNewUser(account[0]);
+        console.log(newUser);
         if(newUser === true){
             dispatch(alert("New User Account Detected" , "info"));
             await dispatch(signUp(account[0]));
@@ -61,7 +64,11 @@ const checkNewUser = async(account)=>{
 
 //register the new user
 const signUp = (account) => async (dispatch)=>{
-    await Identity.methods.registerUser().send({from : account});
+    const publicKey = await window.ethereum.request({
+        method: 'eth_getEncryptionPublicKey',
+        params: [account], // you must have access to the specified account
+    });
+    await Identity.methods.registerUser(publicKey).send({from : account});
     await dispatch(signIn(account));
 }
 
@@ -69,6 +76,8 @@ const signUp = (account) => async (dispatch)=>{
 const signIn = (account)=>async(dispatch)=>{
     //Some Fancy Auth Method
     dispatch(updateUserInfo(account));
+    dispatch(updateIssuerInfo());
+    dispatch(updateRequestInfo());
     dispatch(authSuccess(account));
     dispatch(alert("Sign In Successfull" , "success"));
 }

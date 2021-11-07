@@ -16,7 +16,7 @@ const mapstateToProps = state =>{
 }
 
 const mapDispatchToProps = (dispatch) => ({
-	addId : (issuer , buffer , account) => dispatch(addId(issuer , buffer , account))
+	addId : (issuer , buffer , account , pbk , id) => dispatch(addId(issuer , buffer , account , pbk , id))
 });
 
 const NewId = (props)=>{
@@ -72,7 +72,7 @@ const NewId = (props)=>{
             return;
         }
         setLoad(true);
-        await props.addId(details.identity.address , details.file.buffer, props.User.info.address);
+        await props.addId(details.identity.address , details.file.buffer, props.User.info.address , props.User.info.publicKey , details.identity.id);
         setLoad(false);
     }
 
