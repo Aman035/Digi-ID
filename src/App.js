@@ -14,8 +14,6 @@ import AlertComp from './components/alert';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { authLogout } from './redux/actions/auth';
-import { updateIssuerInfo } from './redux/actions/issuer';
-import { updateRequestInfo } from './redux/actions/issuerRequest';
 import Loading from './components/loading/loading';
 
 const mapStateToProps = state => {
@@ -24,17 +22,10 @@ const mapStateToProps = state => {
     }
 }
 const mapDispatchToProps = (dispatch) => ({
-    logout : () => dispatch(authLogout()),
-    updateIssuerInfo : () => dispatch(updateIssuerInfo()),
-    updateRequestInfo : () => dispatch(updateRequestInfo()),
+    logout : () => dispatch(authLogout())
   });
 
 class App extends Component{
-
-    componentDidMount(){
-        this.props.updateIssuerInfo();
-        this.props.updateRequestInfo();
-    }
 
     render(){
 
