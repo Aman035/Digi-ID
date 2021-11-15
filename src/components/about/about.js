@@ -37,12 +37,12 @@ const About = ()=>(
         <div className="about">
             <h3><b>Requirements</b></h3>
             <p>1.  MetaMask Wallet. 
-                <a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en" target="blank">
+                <a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en" target="_blank" rel="noopener noreferrer">
                     (Download from here)
                 </a>
             </p>
             <p>2.  Some ropston test ethers in your MetaMask Account. 
-                <a href="https://faucet.ropsten.be/" target="blank">
+                <a href="https://faucet.ropsten.be/" target="_blank" rel="noopener noreferrer">
                     (Get test ethers from here)
                 </a>
             </p>
@@ -62,9 +62,9 @@ const About = ()=>(
                 digital identity models.
             </p>
             <p>
-                <a href="https://www.linkedin.com/in/aman-gupta-2001/" target="blank"><LinkedInIcon className="icon" sx={{fontSize : "35px"}}/></a>
-                <a href="https://github.com/Aman035" target="blank"><GitHubIcon  className="icon" sx={{fontSize : "35px"}}/></a>
-                <a href="https://twitter.com/m_AmanGupta" target="blank"><TwitterIcon className="icon" sx={{fontSize : "35px"}}/></a>
+                <a href="https://www.linkedin.com/in/aman-gupta-2001/" target="_blank" rel="noopener noreferrer"><LinkedInIcon className="icon" sx={{fontSize : "35px"}}/></a>
+                <a href="https://github.com/Aman035" target="_blank" rel="noopener noreferrer"><GitHubIcon  className="icon" sx={{fontSize : "35px"}}/></a>
+                <a href="https://twitter.com/m_AmanGupta" target="_blank" rel="noopener noreferrer"><TwitterIcon className="icon" sx={{fontSize : "35px"}}/></a>
             </p>
         </div>
     </div>
