@@ -6,4 +6,13 @@
 }
 .profile{
     min-height : 100vh;
+    padding : 100px 10% 20px 10%;
+    text-align: center;
+}
+.ids{
+    align-items: center;
+    padding : 50px;
+}
+.id{
+    margin : 30px 0;
 }
