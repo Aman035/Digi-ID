@@ -104,3 +104,10 @@ const requestError = (err)=>{
         err : err
     }
 }
+
+export const changeTab = tab => {
+        return {
+            type : ActionTypes.REQUEST_TAB_CHANGE,
+            tab : tab
+        }
+}

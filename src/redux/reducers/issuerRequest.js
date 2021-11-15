@@ -3,8 +3,14 @@ import * as ActionTypes from '../actions/actionTypes';
 //Handle all user data
 const IssuerRequest = (state = {
         loading: false,
-        info: null,
-        err: null
+        info: {
+            address: "",
+            acceptedRequest:[],
+            pendingRequest: [],
+            rejectedRequest: []
+        },
+        err: null,
+        tab : 1
     }, action) => {
     switch (action.type) {
         case ActionTypes.REQUEST_LOADING:
@@ -22,6 +28,10 @@ const IssuerRequest = (state = {
             return {...state,
                 loading: false,
                 err: action.err
+            };
+        case ActionTypes.REQUEST_TAB_CHANGE:
+            return {...state,
+                tab: action.tab
             };
         default:
             return state

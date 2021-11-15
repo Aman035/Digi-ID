@@ -58,8 +58,18 @@ export const getUserInfo = async(account)=>{
 
 const getIds = async(num , account , ids)=>{
     try{
+        
         const identity = await Identity.methods.getId(num , account).call();
-        ids.push(identity);
+        const Id = {
+            num : num,
+            name : identity.Name,
+            hash : identity.Hash,
+            owner : identity.Owner,
+            issuer : identity.Issuer,
+            ownerSignature : identity.OwnerSignature,
+            issuerSignature : identity.IssuerSignature
+        }
+        ids.push(Id);
         return await getIds(num+1 , account , ids);
     }
     catch(err){
