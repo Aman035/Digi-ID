@@ -1,19 +1,22 @@
-import React , {useState} from 'react';
+import React from 'react';
 import './verify.css';
 import Request from './request';
 import Button from '@mui/material/Button';
 import { connect } from 'react-redux';
+import { changeTab } from '../../redux/actions/issuerRequest';
 
 const mapStateToProps = state => {
     return {
       IssuerRequest : state.IssuerRequest
     }
 }
+const mapDispatchToProps = dispatch => ({
+    changeTab : (tab)=>dispatch(changeTab(tab))
+});
 
 const Verify = (props) => {
-    const [reqState , setReqState] = useState(1);
     return(
-        <div className = "issuer">
+        <div className = "verifier">
         <h3>Issuer Account Requests Details</h3>
         <div className = 'detail'>
             <div className="row detailrow">
@@ -34,30 +37,30 @@ const Verify = (props) => {
             </div>
             <div className="row requestrow">
                 <div className="col-12 col-lg-4 p-2">
-                    <Button variant={reqState === 2? "contained": "outlined"} color="success" onClick={()=>setReqState(2)}>
+                    <Button variant={props.IssuerRequest.tab === 2? "contained": "outlined"} color="success" onClick={()=>props.changeTab(2)}>
                         Accepted Requests
                     </Button>
                 </div>
                 <div className="col-12 col-lg-4 p-2">
-                    <Button variant={reqState === 1? "contained": "outlined"} color="primary" onClick={()=>setReqState(1)}>
+                    <Button variant={props.IssuerRequest.tab === 1? "contained": "outlined"} color="primary" onClick={()=>props.changeTab(1)}>
                         Pending Requests
                     </Button>
                 </div>
                 <div className="col-12 col-lg-4 p-2">
-                    <Button variant={reqState === 0? "contained": "outlined"} color="error" onClick={()=>setReqState(0)}>
+                    <Button variant={props.IssuerRequest.tab === 0? "contained": "outlined"} color="error" onClick={()=>props.changeTab(0)}>
                         Rejected Requests
                     </Button>
                 </div>
             </div>
         </div>
         <div>
-            {reqState === 0 ?
+            {props.IssuerRequest.tab === 0 ?
                 <Request 
                     data ={props.IssuerRequest.info.rejectedRequest}
                     owner = {props.IssuerRequest.info.address} />
             :
                 <div>
-                {reqState === 1 ?
+                {props.IssuerRequest.tab === 1 ?
                     <Request 
                         data = {props.IssuerRequest.info.pendingRequest}
                         owner = {props.IssuerRequest.info.address} />
@@ -72,4 +75,4 @@ const Verify = (props) => {
     </div>
     )
 }
-export default connect(mapStateToProps , null)(Verify);
+export default connect(mapStateToProps , mapDispatchToProps)(Verify);
