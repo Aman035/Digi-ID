@@ -5,8 +5,9 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 
 const About = ()=>(
     <div>
+        <h2 className="pageTitle">ABOUT</h2>
         <div className="about">
-            <h3><b>About App</b></h3>
+            <h3><b>App</b></h3>
             <p>
                 The project ‘DIGI ID’ is a decentralized 
                 application (DApp) that seeks to provide a  
@@ -48,7 +49,7 @@ const About = ()=>(
             </p>
         </div>
         <div className="about">
-            <h3><b>About Developer</b></h3>
+            <h3><b>Developer</b></h3>
             <p>
                 This app is solemnly developed by Aman Gupta, 
                 a Blockchain and fullStack Web Developer.
