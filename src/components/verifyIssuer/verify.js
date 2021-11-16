@@ -1,5 +1,4 @@
 import React from 'react';
-import './verify.css';
 import Request from './request';
 import Button from '@mui/material/Button';
 import { connect } from 'react-redux';
@@ -16,8 +15,10 @@ const mapDispatchToProps = dispatch => ({
 
 const Verify = (props) => {
     return(
-        <div className = "verifier">
-        <h3>Issuer Account Requests Details</h3>
+        <div>
+        <h2 className="pageTitle">
+            Issuer Account Requests Details
+        </h2>
         <div className = 'detail'>
             <div className="row detailrow">
                 <div className="col-6 col-lg-4"><b>Verifier Account Address</b></div>

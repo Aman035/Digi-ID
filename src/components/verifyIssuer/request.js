@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './request.css';
 import Button from '@mui/material/Button';
 import { AcceptIssuerAccount , RejectIssuerAccount } from '../../redux/actions/issuerRequest'; 
 import { connect } from 'react-redux';
