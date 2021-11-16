@@ -3,32 +3,16 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { connect } from 'react-redux';
 
-const mapStateToProps = state => {
-  return {
-    Alert : state.Alert
-  }
-}
+const mapStateToProps = state => ({
+  Alert : state.Alert
+}) 
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 //severity : success , error , warning , info
-const AlertComp = (props)=> {
-
-  //   const [open, setOpen] = React.useState(true);
-  //   const handleClose = () => {
-  //     setOpen(false);
-  //   };
-  // return (
-  //   <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-  //       <Alert onClose={handleClose} severity={props.severity} sx={{ width: "100%" }}>
-  //       {props.message}
-  //       </Alert>
-  //   </Snackbar>
-  //   );
-
-    return (
+const AlertComp = (props)=> (
       <React.Fragment>
       {props.Alert.message != null?
       <Snackbar open={true}>
@@ -40,6 +24,5 @@ const AlertComp = (props)=> {
       null
       }
       </React.Fragment>
-      );
-}
+)
 export default connect(mapStateToProps)(AlertComp);

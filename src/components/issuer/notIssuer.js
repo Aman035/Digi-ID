@@ -40,7 +40,7 @@ const NotIssuer = (props) => {
 	});
 
 	return (
-		<div className="register">
+		<div>
 			{load?<Load/>:null}
 			<form>
 				<TextField

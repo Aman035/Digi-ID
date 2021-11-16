@@ -15,6 +15,8 @@ import { Link } from 'react-router-dom';
 import { authLogout } from './redux/actions/auth';
 import Loading from './components/loading/loading';
 import Identity from './components/profile/identity';
+import { updateRequestInfo } from './redux/actions/issuerRequest';
+import { updateIssuerInfo } from './redux/actions/issuer';
 
 const mapStateToProps = state => {
     return {
@@ -23,13 +25,21 @@ const mapStateToProps = state => {
     }
 }
 const mapDispatchToProps = (dispatch) => ({
-    logout : () => dispatch(authLogout())
+    logout : () => dispatch(authLogout()),
+    updateIssuerInfo : () => dispatch(updateIssuerInfo()),
+    updateRequestInfo : () => dispatch(updateRequestInfo())
+
   });
 
 class App extends Component{
 
-    render(){
+    componentDidMount(){
+        this.props.updateIssuerInfo();
+        this.props.updateRequestInfo();
+    }
 
+    render(){
+        console.log("why");
         if(window.ethereum !== undefined && this.props.Auth.isAuthenticated){
             window.ethereum.on('accountsChanged', (accounts)=>{
                 window.location.reload();

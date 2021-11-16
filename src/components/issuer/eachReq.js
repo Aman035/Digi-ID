@@ -4,18 +4,16 @@ import { acceptRequest , rejectRequest, decrypt } from '../../redux/actions/user
 import { connect } from 'react-redux';
 import Load from '../loading/loading';
 
-const mapStateToProps = state => {
-    return {
-      User : state.User
-    }
-}
+const mapStateToProps = state => ({
+    User : state.User
+})
 
 const mapDispatchToProps = (dispatch) => ({
-	acceptIssuerAccount : (rqNo , account) => dispatch(acceptRequest(rqNo , account)),
+	acceptIssuerAccount : (rqNo , account , id) => dispatch(acceptRequest(rqNo , account , id)),
 	rejectIssuerAccount : (rqNo , account) => dispatch(rejectRequest(rqNo , account)),
 });
 
-const EachReq = (props)=>{
+const EachReq = (props)=> {
     const [Id , setId] = useState(undefined);
     const [load , setLoad] = useState(false);
 
@@ -50,7 +48,7 @@ const EachReq = (props)=>{
                 <div className="col-12 col-lg-4">
                     <Button className="reqBtn" variant="contained" color="success" onClick={async ()=>{
                         setLoad(true);
-                        await props.acceptIssuerAccount(props.req.requestNo ,props.User.info.address);
+                        await props.acceptIssuerAccount(props.req.requestNo ,props.User.info.address ,props.id);
                         setLoad(false)}}>
                         Accept
                     </Button>

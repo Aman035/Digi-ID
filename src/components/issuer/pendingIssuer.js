@@ -1,7 +1,7 @@
 import React from 'react';
 import './pendingIssuer.css';
 
-const PendingIssuer = ()=>(
+const PendingIssuer = () => (
     <div className="pending">
         <img src="/assets/issuer/relax.gif" alt="relax" height= "50%"/>
         <h5 className="text">Sit Back & Relax</h5>

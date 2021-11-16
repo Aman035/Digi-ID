@@ -48,7 +48,7 @@ const Header = (props)=>{
 	return (
 		<div className="header">
 			<span className="align">
-				{props.Auth.isAuthenticated && props.User.info!=null && props.IssuerRequest.info!=null && props.User.info.address.toLowerCase() ===  props.IssuerRequest.info.address.toLowerCase()?
+				{props.User.info.address!=="" && props.User.info.address.toLowerCase() ===  props.IssuerRequest.info.address.toLowerCase()?
 				<div className="customNav">
 					<Tooltip title={<h6>Issuer Verification</h6>} arrow placement="right">
 						<Link to="/verifyissuer">
