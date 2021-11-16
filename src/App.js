@@ -88,6 +88,7 @@ class App extends Component{
                 <img src="/assets/logo.png" alt="Logo" height="60px" width ="60px" className="logo"/>
                 </Link>
                 <Header/>
+                <div className="headingTab"></div>
                 <Switch>
                     <Route path='/home' component={Home}/>
                     <Route path='/about' component={About}/>
@@ -103,6 +104,7 @@ class App extends Component{
                     <Redirect to='/home'/>
                 </Switch>
                 <AlertComp className="alert"/>
+                <div className="footer">Copyright @DIGI ID</div>
                 </div>
         )
     }
