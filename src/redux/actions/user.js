@@ -1,29 +1,24 @@
 import * as ActionTypes from './actionTypes';
+import { alert } from './alert';
 import Identity from '../../Identity';
-import { alert} from './alert';
-import { REFRESH_RATE } from '../../helper';
+import Store from '../store';
 import ipfs from '../../ipfs';
 import web3 from '../../web3';
 var ethUtil = require('ethereumjs-util');
 var sigUtil = require('eth-sig-util');
-
-async function delay(ms) {
-    // return await for better async stack trace support in case of errors.
-    return await new Promise(resolve => setTimeout(resolve, ms));
-}
+var _ = require('lodash');
 
 //update user info in redux store
 export const updateUserInfo = (account) => async(dispatch)=>{
-    dispatch(userinfoLoading());
     try{
         const info = await getUserInfo(account);
+        const state = Store.getState();
+        if(! _.isEqual(info , state.User.info))
         dispatch(userinfoSuccess(info));
     }
     catch(err){
         dispatch(userinfoError(err.message));
     }
-    await delay(REFRESH_RATE);
-    dispatch(updateUserInfo(account));
 }
 
 //get User's Info from blockchain
@@ -157,10 +152,10 @@ export const addId = (issuer , buffer , account , pbk,id) => async dispatch =>{
     }
 }
 
-export const acceptRequest = (num , account) => async dispatch => {
+export const acceptRequest = (num , account ,id) => async dispatch => {
    
     try{
-        const msg = "Verified Identity#" + num; 
+        const msg = id + " : " + account; 
         const sign = await web3.eth.personal.sign(msg , account);
         await Identity.methods.AcceptIdRequest(num , sign).send({from : account});
     }
@@ -187,12 +182,6 @@ export const decrypt = async(msg , account) => {
     return "https://ipfs.io/ipfs/" + decrypted;
 }
 
-const userinfoLoading = ()=>{
-    return {
-        type : ActionTypes.USERINFO_LOADING
-    }
-}
-
 const userinfoSuccess = (info)=>{
     return {
         type : ActionTypes.USERINFO_SUCCESS,
@@ -206,3 +195,8 @@ export const userinfoError = (err)=>{
         err : err
     }
 }
+
+export const changeTab = tab => ({
+    type : ActionTypes.USERINFO_TAB_CHANGE,
+    tab : tab
+})

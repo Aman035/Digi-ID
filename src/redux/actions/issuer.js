@@ -1,27 +1,22 @@
 import * as ActionTypes from './actionTypes';
 import Identity from '../../Identity';
-import { REFRESH_RATE } from '../../helper';
-
-async function delay(ms) {
-    // return await for better async stack trace support in case of errors.
-    return await new Promise(resolve => setTimeout(resolve, ms));
-  }
+import Store from '../store';
+var _= require('lodash');
 
 //update all issuers info in redux store
 export const updateIssuerInfo = () => async (dispatch) => {
-    dispatch(issuerLoading());
     try{
         const issuers = new Map();
         const info = await getIssuerInfo(0 ,issuers);
+        const state = Store.getState();
+        if(! _.isEqual(state.Issuer.info , info))
         dispatch(issuerSuccess(info));
     }
     catch(err){
         dispatch(issuerError(err.message));
     }
-    await delay(REFRESH_RATE);
-    dispatch(updateIssuerInfo());
-
 }
+
 //get all issuers data from blockchain
 const getIssuerInfo = async(num , issuers)=>{
     try{
@@ -34,22 +29,12 @@ const getIssuerInfo = async(num , issuers)=>{
     }
 }
 
-const issuerLoading = ()=>{
-    return {
-        type : ActionTypes.ISSUER_LOADING
-    }
-}
+const issuerSuccess = info => ({
+    type : ActionTypes.ISSUER_SUCCESS,
+    info : info
+})
 
-const issuerSuccess = (info)=>{
-    return {
-        type : ActionTypes.ISSUER_SUCCESS,
-        info : info
-    };
-}
-
-const issuerError = (err)=>{
-    return {
-        type : ActionTypes.ISSUER_FAIL,
-        err : err
-    }
-}
+const issuerError = err => ({
+    type : ActionTypes.ISSUER_FAIL,
+    err : err
+})

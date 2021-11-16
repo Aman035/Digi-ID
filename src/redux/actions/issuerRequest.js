@@ -1,25 +1,21 @@
 import * as ActionTypes from './actionTypes';
+import { alert } from './alert';
 import Identity from '../../Identity';
-import {alert} from './alert';
-import { REFRESH_RATE } from '../../helper';
-
-async function delay(ms) {
-    // return await for better async stack trace support in case of errors.
-    return await new Promise(resolve => setTimeout(resolve, ms));
-  }
+import Store from '../store';
+var _ = require('lodash');
 
 //update all issuer account requests info in redux store
 export const updateRequestInfo = () => async dispatch => {
-    dispatch(requestLoading());
     try{
         const info = await getRequestInfo();
+        const state = Store.getState();
+        //don't update state if it is same as previous
+        if(! _.isEqual(state.IssuerRequest.info, info))
         dispatch(requestSuccess(info));
     }
     catch(err){
         dispatch(requestError(err.message));
     }
-    await delay(REFRESH_RATE);
-    dispatch(updateRequestInfo());
 }
 
 export const AcceptIssuerAccount = (rqNo, account) => async dispatch => {
@@ -43,15 +39,7 @@ export const RejectIssuerAccount = (rqNo, account) => async dispatch => {
 }
 
 const requestUtil = async(info , req)=>{
-
-    let request = {
-        requestNo : 0,
-        address : "",
-        status : "",
-        desc : "",
-        id : ""
-    }
-
+    const request = {};
     //data cleaning
     const reqData = await Identity.methods.IssuerVerificationRequest(req).call();
     request.requestNo = req;
@@ -75,39 +63,23 @@ const getRequestInfo = async()=>{
     info.address = await Identity.methods.Owner().call();
 
     for( let req = 0;1;req++){
-        try{
-            info = await requestUtil(info , req);
-        }
-        catch(err){
-            break;
-        }
+        try{info = await requestUtil(info , req);}
+        catch(err){break;}
     }
     return info;
 }
 
-const requestLoading = ()=>{
-    return {
-        type : ActionTypes.REQUEST_LOADING
-    }
-}
+const requestSuccess = info => ({
+    type : ActionTypes.REQUEST_SUCCESS,
+    info : info
+})
 
-const requestSuccess = (info)=>{
-    return {
-        type : ActionTypes.REQUEST_SUCCESS,
-        info : info
-    };
-}
+const requestError = err => ({
+    type : ActionTypes.REQUEST_FAIL,
+    err : err
+})
 
-const requestError = (err)=>{
-    return {
-        type : ActionTypes.REQUEST_FAIL,
-        err : err
-    }
-}
-
-export const changeTab = tab => {
-        return {
-            type : ActionTypes.REQUEST_TAB_CHANGE,
-            tab : tab
-        }
-}
+export const changeTab = tab => ({
+    type : ActionTypes.REQUEST_TAB_CHANGE,
+    tab : tab
+})

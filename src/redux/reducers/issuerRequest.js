@@ -1,8 +1,7 @@
 import * as ActionTypes from '../actions/actionTypes';
 
-//Handle all user data
+//Handle all issuer account requests data
 const IssuerRequest = (state = {
-        loading: false,
         info: {
             address: "",
             acceptedRequest:[],
@@ -13,20 +12,13 @@ const IssuerRequest = (state = {
         tab : 1
     }, action) => {
     switch (action.type) {
-        case ActionTypes.REQUEST_LOADING:
-            return {...state,
-                loading : true,
-                err : null
-            };
         case ActionTypes.REQUEST_SUCCESS:
             return {...state,
-                loading: false,
                 info: action.info,
                 err: null
             };
         case ActionTypes.REQUEST_FAIL:
             return {...state,
-                loading: false,
                 err: action.err
             };
         case ActionTypes.REQUEST_TAB_CHANGE:

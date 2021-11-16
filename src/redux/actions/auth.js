@@ -5,6 +5,7 @@ import { alert } from './alert';
 import { updateUserInfo } from './user';
 import { updateRequestInfo } from './issuerRequest';
 import { updateIssuerInfo } from './issuer';
+import { delay } from '../../helper';
 
 //try connecting to metamask wallet and get account address
 export const trySignin = ()=>async(dispatch)=>{
@@ -40,7 +41,6 @@ export const trySignin = ()=>async(dispatch)=>{
 
     try{
         const newUser = await checkNewUser(account[0]);
-        console.log(newUser);
         if(newUser === true){
             dispatch(alert("New User Account Detected" , "info"));
             await dispatch(signUp(account[0]));
@@ -52,18 +52,17 @@ export const trySignin = ()=>async(dispatch)=>{
     catch(err){
         dispatch(authError(err.message));
         dispatch(alert(err.message , "error"));
-    }
-        
+    }    
 }
 
 //check user is existing or new from blockchain data
-const checkNewUser = async(account)=>{
+const checkNewUser = async account => {
     const User = await Identity.methods.UserDetail(account).call();
     return User.Registered ? false : true;
 }
 
 //register the new user
-const signUp = (account) => async (dispatch)=>{
+const signUp = account => async dispatch => {
     const publicKey = await window.ethereum.request({
         method: 'eth_getEncryptionPublicKey',
         params: [account], // you must have access to the specified account
@@ -73,37 +72,36 @@ const signUp = (account) => async (dispatch)=>{
 }
 
 //signin user
-const signIn = (account)=>async(dispatch)=>{
+const signIn = account => async dispatch => {
     //Some Fancy Auth Method
-    dispatch(updateUserInfo(account));
-    dispatch(updateIssuerInfo());
-    dispatch(updateRequestInfo());
+    await dispatch(updateUserInfo(account));
+    dispatch(updateAllInfo(account));
     dispatch(authSuccess(account));
     dispatch(alert("Sign In Successfull" , "success"));
 }
 
-const authLoading = ()=>{
-    return {
-        type : ActionTypes.AUTH_LOADING
-    }
+const updateAllInfo = account => async dispatch => {
+    await delay();
+    await dispatch(updateUserInfo(account));
+    await dispatch(updateIssuerInfo());
+    await dispatch(updateRequestInfo());
+    dispatch(updateAllInfo(account));
 }
 
-const authSuccess = (user)=>{
-    return {
-        type : ActionTypes.AUTH_SUCCESS,
-        user : user
-    };
-}
+const authLoading = ()=> ({
+    type : ActionTypes.AUTH_LOADING
+}) 
 
-const authError = (err)=>{
-    return {
-        type : ActionTypes.AUTH_FAIL,
-        err : err
-    }
-}
+const authSuccess = user => ({
+    type : ActionTypes.AUTH_SUCCESS,
+    user : user
+})
 
-export const authLogout = ()=>{
-    return{
-        type : ActionTypes.AUTH_LOGOUT
-    }
-}
+const authError = err => ({
+    type : ActionTypes.AUTH_FAIL,
+    err : err
+}) 
+
+export const authLogout = () => ({
+    type : ActionTypes.AUTH_LOGOUT
+})

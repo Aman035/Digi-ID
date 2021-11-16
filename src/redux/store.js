@@ -7,18 +7,15 @@ import Issuer from './reducers/issuer';
 import Alert from './reducers/alert';
 import IssuerRequest from './reducers/issuerRequest';
 
-const ConfigureStore = () => {
-    const store = createStore(
-        combineReducers({
-            Auth : Auth,
-            User : User,
-            Issuer : Issuer,
-            IssuerRequest : IssuerRequest,
-            Alert : Alert
-        }),
-        applyMiddleware(thunk, logger)
-    );
-    return store;
-}
+const store = createStore(
+    combineReducers({
+        Auth : Auth,
+        User : User,
+        Issuer : Issuer,
+        IssuerRequest : IssuerRequest,
+        Alert : Alert
+    }),
+    applyMiddleware(thunk, logger)
+);
 
 export default store;
