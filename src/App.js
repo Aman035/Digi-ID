@@ -39,7 +39,6 @@ class App extends Component{
     }
 
     render(){
-        console.log("why");
         if(window.ethereum !== undefined && this.props.Auth.isAuthenticated){
             window.ethereum.on('accountsChanged', (accounts)=>{
                 window.location.reload();

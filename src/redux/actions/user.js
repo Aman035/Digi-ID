@@ -155,7 +155,7 @@ export const addId = (issuer , buffer , account , pbk,id) => async dispatch =>{
 export const acceptRequest = (num , account ,id) => async dispatch => {
    
     try{
-        const msg = id + " : " + account; 
+        const msg = id + " : " + account.toLowerCase(); 
         const sign = await web3.eth.personal.sign(msg , account);
         await Identity.methods.AcceptIdRequest(num , sign).send({from : account});
     }
@@ -174,12 +174,38 @@ export const rejectRequest = (num , account) => async dispatch => {
     }
 }
 
-export const decrypt = async(msg , account) => {
-    const decrypted = await window.ethereum.request({
-        method: 'eth_decrypt',
-        params: [msg, account],
-    });
-    return "https://ipfs.io/ipfs/" + decrypted;
+export const decrypt = (msg , account) => async dispatch => {
+    try{
+        const decrypted = await window.ethereum.request({
+            method: 'eth_decrypt',
+            params: [msg, account],
+        });
+        return "https://ipfs.io/ipfs/" + decrypted;
+    }
+    catch(err){
+        dispatch(alert(err.message , "error"));
+    }
+}
+
+export const deleteId = (num,account) => async dispatch => {
+    try{
+        await Identity.methods.deleteId(num).send({from : account});
+        return true;
+    }
+    catch(err){
+        dispatch(alert(err.message , "error"));
+        return false;
+    }
+}
+
+export const recoverFromSign = (msg,sign) => {
+    if(sign === "Rejected")
+    return "Issuer Has Rejected this Identity";
+
+    if(sign === "Pending")
+    return "Issuer Signature in still Pending";
+
+    return web3.eth.accounts.recover(msg , sign);
 }
 
 const userinfoSuccess = (info)=>{
