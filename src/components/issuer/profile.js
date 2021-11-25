@@ -1,5 +1,5 @@
 import React from 'react';
-import './issuer.css';
+import './profile.css';
 import NotIssuer from './notIssuer';
 import PendingIssuer from './pendingIssuer';
 import Issuer from './issuer';
@@ -10,7 +10,7 @@ const mapStateToProps = state => ({
 })
 
 const Profile = props => (
-    <div className="profile">
+    <div>
         {props.User.info.issuer.status === "0"?
             <NotIssuer address={props.User.info.address}/>
             :

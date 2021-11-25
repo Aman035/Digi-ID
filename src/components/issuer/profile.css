@@ -1,3 +1,12 @@
-.profile{
-    min-height : 100vh;
+.pendingImg{
+    padding : 30px;
+}
+.text{
+    margin : 20px 0 !important;
+}
+.note{
+    padding : 60px 20px 10px 20px
+}
+.notIssuer{
+    padding : 100px 10% 30px;
 }

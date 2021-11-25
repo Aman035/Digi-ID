@@ -1,9 +1,9 @@
 import React from 'react';
-import './pendingIssuer.css';
 
 const PendingIssuer = () => (
-    <div className="pending">
-        <img src="/assets/issuer/relax.gif" alt="relax" height= "50%"/>
+    <div>
+        <h2 className="pageTitle">ISSUER ACCOUNT REQUEST</h2>
+        <img className ="pendingImg" src="/assets/issuer/relax.gif" alt="relax" height="400px"/>
         <h5 className="text">Sit Back & Relax</h5>
         <h4>
         Your Issuer Account Request is Under Review

@@ -5,7 +5,6 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import './notIssuer.css';
 import { requestIssuerAccount } from '../../redux/actions/user';
 import Load from '../loading/loading';
 
@@ -42,6 +41,8 @@ const NotIssuer = (props) => {
 	return (
 		<div>
 			{load?<Load/>:null}
+			<h2 className="pageTitle">REQUEST AN ISSUER ACCOUNT</h2>
+			<div className="notIssuer">
 			<form>
 				<TextField
 					className="text"
@@ -88,6 +89,7 @@ const NotIssuer = (props) => {
                 If you previously requested for an Issuer Account and still seeing this page
                 then your request propably got rejected.
             </h6>
+			</div>
 		</div>
 	);
 };

@@ -1,6 +1,5 @@
 import React from 'react';
 import Request from './request';
-import './issuer.css';
 import Button from '@mui/material/Button';
 import { connect } from 'react-redux';
 import { changeTab } from '../../redux/actions/user';
@@ -14,8 +13,10 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const Issuer = props => (
-        <div className = "issuer">
-            <h3>Issuer Account Details</h3>
+        <div>
+            <h3 className="pageTitle">
+                ISSUER ACCOUNT DETAILS
+            </h3>
             <div className = 'detail'>
                 <div className="row detailrow">
                     <div className="col-6 col-lg-4"><b>Issued ID</b></div>

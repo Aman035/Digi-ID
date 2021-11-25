@@ -1,5 +1,4 @@
 import React from 'react';
-import './request.css';
 import EachReq from './eachReq';
 
 const Request = props => (
