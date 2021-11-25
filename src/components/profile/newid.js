@@ -8,18 +8,16 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { connect } from 'react-redux';
 import { addId } from '../../redux/actions/user';
 
-const mapstateToProps = state =>{
-    return{
-        Issuer : state.Issuer,
-        User : state.User
-    }
-}
+const mapstateToProps = state => ({
+    Issuer : state.Issuer,
+    User : state.User
+})
 
 const mapDispatchToProps = (dispatch) => ({
 	addId : (issuer , buffer , account , pbk , id) => dispatch(addId(issuer , buffer , account , pbk , id))
 });
 
-const NewId = (props)=>{
+const NewId = props => {
 
     const [load , setLoad] = useState(false);
     const [details , setdetails] = useState({
@@ -77,9 +75,10 @@ const NewId = (props)=>{
     }
 
     return(
-        <div className="newId">
+        <div>
             {load? <Load/>:null}
-            <h3>Add a New Identity</h3>
+            <h3 className="pageTitle">ADD NEW IDENTITY</h3>
+            <div className="pad">
             <TextField
                 id="identity"
                 name="identity"
@@ -145,6 +144,7 @@ const NewId = (props)=>{
                 metamask account private key and can only be decrypted by its 
                 corrosponding private key.
             </h6>
+            </div>
         </div>
     )
 }

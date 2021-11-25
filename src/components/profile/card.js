@@ -12,11 +12,8 @@ const useStyles = makeStyles(() => ({
   root: {
     maxWidth: 310,
     margin: 'auto',
-    boxShadow: 'none',
-    borderRadius: "20px",
-  },
-  content: {
-    textAlign:"center"
+    boxShadow: '0 .5rem 1rem rgba(0,0,0,.15)',
+    borderRadius : '10px'
   },
   cta: {
     marginTop: 24,
@@ -31,7 +28,7 @@ export const ItemCard = React.memo(function ItemCard(props) {
   return (
     <Link to={`/id/${props.num}`}  style={{ textDecoration: 'none' }} >
       <Card className={cx(styles.root, shadowStyles.root)}>
-        <CardContent className={styles.content}>
+        <CardContent>
           <TextInfoContent classes={textCardContentStyles}   heading={props.name} />
         </CardContent>
       </Card>
