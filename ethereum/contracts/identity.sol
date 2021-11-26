@@ -162,28 +162,6 @@ contract Identity {
         IssuerDetail[_Issuer].Request[IssuerDetail[_Issuer].ReqCount++] = NewRequest;
     }
 
-    //Modify An Identity
-    function modifyId(string memory _Hash, address _Issuer,string memory _Sign , 
-    uint _IdNum , string memory _IssuerHash) registered(msg.sender) issue(_Issuer) public{
-        require(_IdNum < UserDetail[msg.sender].IdCount  , "Id does not Exist");
-        
-        identity memory NewId;
-        NewId.Name = IssuerDetail[_Issuer].IssueId;
-        NewId.Hash = _Hash;
-        NewId.Owner = msg.sender;
-        NewId.Issuer = _Issuer;
-        NewId.OwnerSignature = _Sign;
-        NewId.IssuerSignature = "Pending";
-        UserDetail[msg.sender].Ids[_IdNum] = NewId;
-
-        //create a verification request
-        verifyIdRequest memory NewRequest;
-        NewRequest.Owner = msg.sender;
-        NewRequest.Hash = _IssuerHash;
-        NewRequest.Status = 1;
-        IssuerDetail[_Issuer].Request[IssuerDetail[_Issuer].ReqCount++] = NewRequest;
-    }
-
     //Delete An Identity
     function deleteId(uint _IdNum) registered(msg.sender) public {
         require(_IdNum < UserDetail[msg.sender].IdCount  , "Id does not Exist");
@@ -213,7 +191,8 @@ contract Identity {
                 break;
             }
         }
-        require(flag == true, "User Identity Not Found");//use revert
+        if(flag == false)
+        revert("User Identity Not Found");
 
         IssuerDetail[msg.sender].Request[_ReqNo].Status = 2;
     }
@@ -236,7 +215,10 @@ contract Identity {
                 break;
             }
         }
-        require(flag == true, "User Identity Not Found");
+    }
+
+    function totalId() public view returns (uint){
+        return UserDetail[msg.sender].IdCount;
     }
 
     function getId(uint _IdNo, address account) public view returns (identity memory){
@@ -244,8 +226,20 @@ contract Identity {
         return UserDetail[account].Ids[_IdNo];
     }
 
-    function getRequest(uint _RqNo) public issue(msg.sender) view returns (verifyIdRequest memory){
+    function totalIssuer() public view returns (uint){
+        return Issuer.length;
+    }
+
+    function totalRequest() public view returns (uint){
+        return IssuerDetail[msg.sender].ReqCount;
+    }
+
+    function getRequest(uint _RqNo) issue(msg.sender) public view returns (verifyIdRequest memory){
         require(_RqNo < IssuerDetail[msg.sender].ReqCount, "Request does not exist");
         return IssuerDetail[msg.sender].Request[_RqNo];
+    }
+
+    function issuerVerificationRequestCount() public view returns (uint){
+        return IssuerVerificationRequest.length;
     }
 }
