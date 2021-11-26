@@ -7,6 +7,7 @@ import './newId.css';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { connect } from 'react-redux';
 import { addId } from '../../redux/actions/user';
+import { useHistory } from 'react-router-dom';
 
 const mapstateToProps = state => ({
     Issuer : state.Issuer,
@@ -18,7 +19,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const NewId = props => {
-
+    const history = useHistory();
     const [load , setLoad] = useState(false);
     const [details , setdetails] = useState({
         identity : {
@@ -71,7 +72,7 @@ const NewId = props => {
         }
         setLoad(true);
         await props.addId(details.identity.address , details.file.buffer, props.User.info.address , props.User.info.publicKey , details.identity.id);
-        setLoad(false);
+        history.push('/profile');
     }
 
     return(
