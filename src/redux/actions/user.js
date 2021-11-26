@@ -39,10 +39,12 @@ export const getUserInfo = async(account)=>{
         }
     };
 
-    const userData = await Identity.methods.UserDetail(account).call();
-    const issuerData = await Identity.methods.IssuerDetail(account).call();
-    info.identity = await getIds(0 , account , []);
-    info = await getRequests(0 , account , info);
+    const userData = await Identity.methods.UserDetail(account).call({from : account});
+    const issuerData = await Identity.methods.IssuerDetail(account).call({from : account});
+    const totalId = await Identity.methods.totalId().call({from : account});
+    const totalRequest = await Identity.methods.totalRequest().call({from : account});
+    info.identity = await getIds(0 , totalId, account , []);
+    info = await getRequests(0 , totalRequest, account , info);
     info.registered = userData.Registered;
     info.publicKey = userData.PublicKey;
     info.issuer.status = issuerData.Status;
@@ -51,10 +53,10 @@ export const getUserInfo = async(account)=>{
     return info;
 }
 
-const getIds = async(num , account , ids)=>{
-    try{
-        
-        const identity = await Identity.methods.getId(num , account).call();
+const getIds = async(num ,total , account , ids)=>{
+
+    if(num < total){
+        const identity = await Identity.methods.getId(num , account).call({from : account});
         const Id = {
             num : num,
             name : identity.Name,
@@ -65,15 +67,14 @@ const getIds = async(num , account , ids)=>{
             issuerSignature : identity.IssuerSignature
         }
         ids.push(Id);
-        return await getIds(num+1 , account , ids);
+        return await getIds(num+1 ,total,  account , ids);
     }
-    catch(err){
-        return ids;
-    } 
+    else return ids;
 }
 
-const getRequests = async(num ,account , info)=>{
-    try{
+const getRequests = async(num , total ,account , info)=>{
+ 
+    if(num < total){
         let rqData = await Identity.methods.getRequest(num).call({from : account});
         const request = {
             requestNo : num,
@@ -94,11 +95,10 @@ const getRequests = async(num ,account , info)=>{
         if(request.status === "0")
         info.issuer.rejectedRequest.push(request);
 
-        return await getRequests(num+1 , account , info);
+        return await getRequests(num+1 , total, account , info);
     }
-    catch(err){
+    else
         return info;
-    }
 }
 
 export const requestIssuerAccount = 
@@ -131,7 +131,7 @@ export const addId = (issuer , buffer , account , pbk,id) => async dispatch =>{
         )
         );
         
-        const Issuer_Data = await Identity.methods.UserDetail(issuer).call();
+        const Issuer_Data = await Identity.methods.UserDetail(issuer).call({from : account});
         const encrypted_issuer_hash = ethUtil.bufferToHex(
         Buffer.from(
             JSON.stringify(

@@ -7,7 +7,8 @@ var _= require('lodash');
 export const updateIssuerInfo = () => async (dispatch) => {
     try{
         const issuers = new Map();
-        const info = await getIssuerInfo(0 ,issuers);
+        const totalIssuers = await Identity.methods.totalIssuer().call();
+        const info = await getIssuerInfo(0 , totalIssuers , issuers);
         const state = Store.getState();
         if(! _.isEqual(state.Issuer.info , info))
         dispatch(issuerSuccess(info));
@@ -18,15 +19,14 @@ export const updateIssuerInfo = () => async (dispatch) => {
 }
 
 //get all issuers data from blockchain
-const getIssuerInfo = async(num , issuers)=>{
-    try{
+const getIssuerInfo = async(num , total , issuers)=>{
+    if(num < total){
         const issuerData = await Identity.methods.Issuer(num).call();
         issuers.set(issuerData.IssueId,issuerData.IssuerAddress);
-        return await getIssuerInfo(num+1 , issuers);
+        return await getIssuerInfo(num+1 , total ,issuers);
     }
-    catch(err){
+    else
         return issuers;
-    }
 }
 
 const issuerSuccess = info => ({

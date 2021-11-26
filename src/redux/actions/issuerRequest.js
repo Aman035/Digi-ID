@@ -61,10 +61,9 @@ const getRequestInfo = async()=>{
     };
 
     info.address = await Identity.methods.Owner().call();
-
-    for( let req = 0;1;req++){
-        try{info = await requestUtil(info , req);}
-        catch(err){break;}
+    const totalReq = await Identity.methods.issuerVerificationRequestCount().call();
+    for( let req = 0; req<totalReq ; req++){
+        info = await requestUtil(info , req);
     }
     return info;
 }
