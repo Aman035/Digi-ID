@@ -21,7 +21,7 @@ const Identity = props => {
         setSigner1(recoverFromSign(props.identity.name , props.identity.ownerSignature));
         const msg = props.identity.name + " : "+ props.identity.owner.toLowerCase();
         setSigner2(recoverFromSign( msg, props.identity.issuerSignature));
-    });
+    },[props]);
 
     return(
     <div>

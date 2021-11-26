@@ -1,6 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import logger from 'redux-logger';
+// import logger from 'redux-logger';
 import Auth from './reducers/auth';
 import User from './reducers/user';
 import Issuer from './reducers/issuer';
@@ -15,7 +15,7 @@ const store = createStore(
         IssuerRequest : IssuerRequest,
         Alert : Alert
     }),
-    applyMiddleware(thunk, logger)
+    applyMiddleware(thunk)
 );
 
 export default store;
