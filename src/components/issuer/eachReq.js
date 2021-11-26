@@ -9,6 +9,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
+    decrypt : (hash , account) => dispatch(decrypt(hash , account)),
 	acceptIssuerAccount : (rqNo , account , id) => dispatch(acceptRequest(rqNo , account , id)),
 	rejectIssuerAccount : (rqNo , account) => dispatch(rejectRequest(rqNo , account)),
 });
@@ -37,7 +38,7 @@ const EachReq = (props)=> {
             <div className="row p-2">
                 <div className="col-12">
                 <Button className="reqBtn" variant="contained" color="info"
-                    onClick={async()=>{const decypted = await decrypt(props.req.hash ,props.User.info.address); setId(decypted);}}>
+                    onClick={async()=>{const decypted = await props.decrypt(props.req.hash ,props.User.info.address); setId(decypted);}}>
                     Decrypt ID
                 </Button>
                 </div>
