@@ -2,9 +2,9 @@
 
 # dependencies
 /node_modules
-/ethereum/node_modules
-/ethereum/.env
-/ethereum/build
+/contract/node_modules
+/contract/.env
+/contract/build
 /.pnp
 .pnp.js
 
