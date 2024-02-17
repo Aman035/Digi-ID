@@ -1,11 +1,12 @@
-   > transaction hash:    0x158e33e030162391d6e396f40ac6a678b223bda4932d6939da643f8525a28d8f
-   > Blocks: 2            Seconds: 25
-   > contract address:    0xc5a422571d21EeCe071Ac2f61dc6c9FcC61137A6
-   > block number:        11497990
-   > block timestamp:     1637907064
-   > account:             0x35B84d6848D16415177c64D64504663b998A6ab4
-   > balance:             2.164354919362498411
-   > gas used:            2295852 (0x23082c)
-   > gas price:           20 gwei
-   > value sent:          0 ETH
-   > total cost:          0.04591704 ETH
+THIS FILE CONTAINS ALL DETAILS FOR ABOUT CONTRACT DEPLOYMENT
+
+Deployment Chain - Matic Mumbai
+
+ Deploying 'Identity'
+   --------------------
+   > transaction hash:    0x2e63f30070528f9745bc20ce831d0996d562718191bcd73f113e45f4dfcbdcbb
+   > Blocks: 2            Seconds: 9
+   > contract address:    0xFbD45EFD350dDC7953F3DbEe9B1E5E233b567845
+   > block number:        26381136
+   > block timestamp:     1652985076
+   > account:             0x28F1C7B4596D9db14f85c04DcBd867Bf4b14b811
