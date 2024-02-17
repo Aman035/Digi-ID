@@ -10,7 +10,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch) => ({
     decrypt : (hash , account) => dispatch(decrypt(hash , account)),
-	acceptIssuerAccount : (rqNo , account , id) => dispatch(acceptRequest(rqNo , account , id)),
+	acceptIssuerAccount : (rqNo , account , id , owner) => dispatch(acceptRequest(rqNo , account , id , owner)),
 	rejectIssuerAccount : (rqNo , account) => dispatch(rejectRequest(rqNo , account)),
 });
 
@@ -49,7 +49,7 @@ const EachReq = (props)=> {
                 <div className="col-12 col-lg-4">
                     <Button className="reqBtn" variant="contained" color="success" onClick={async ()=>{
                         setLoad(true);
-                        await props.acceptIssuerAccount(props.req.requestNo ,props.User.info.address ,props.id);
+                        await props.acceptIssuerAccount(props.req.requestNo ,props.User.info.address ,props.id , props.req.owner);
                         setLoad(false)}}>
                         Accept
                     </Button>

@@ -1,21 +1,21 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-// import logger from 'redux-logger';
-import Auth from './reducers/auth';
 import User from './reducers/user';
-import Issuer from './reducers/issuer';
+import Auth from './reducers/auth';
 import Alert from './reducers/alert';
+import Issuer from './reducers/issuer';
 import IssuerRequest from './reducers/issuerRequest';
+// import logger from 'redux-logger';
 
 const store = createStore(
-    combineReducers({
-        Auth : Auth,
-        User : User,
-        Issuer : Issuer,
-        IssuerRequest : IssuerRequest,
-        Alert : Alert
-    }),
-    applyMiddleware(thunk)
+  combineReducers({
+    User: User,
+    Auth: Auth,
+    Alert: Alert,
+    Issuer: Issuer,
+    IssuerRequest: IssuerRequest
+  }),
+  applyMiddleware(thunk)
 );
 
 export default store;

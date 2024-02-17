@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './app.css';
+import './App.css';
 import {Switch,Route,Redirect,withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import Home from './components/home/home';
@@ -103,11 +103,10 @@ class App extends Component{
                     <Redirect to='/home'/>
                 </Switch>
                 <AlertComp className="alert"/>
-                <div className="footer">Copyright @DIGI ID</div>
+                <div className="footer">Copyright @Decentra ID</div>
                 </div>
         )
     }
 }
 
 export default withRouter(connect(mapStateToProps , mapDispatchToProps)(App));
-

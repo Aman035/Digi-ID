@@ -81,7 +81,7 @@ const Identity = props => {
                 <h3><u>Issuer's Signature Verification</u></h3>
                 <div className="row detailrow">
                     <div className="col-6 col-lg-4"><b>Issuer's Signature</b></div>
-                    <div className="col-6 col-lg-8">{props.identity.ownerSignature}</div>
+                    <div className="col-6 col-lg-8">{props.identity.issuerSignature}</div>
                 </div>
                 <div className="row detailrow">
                     <div className="col-6 col-lg-4"><b>Signed Message</b></div>

@@ -43,7 +43,8 @@ const Header = (props)=>{
 		link : "/about",
 		icon : <InfoIcon color="primary" fontSize="large"/>,
 		private : false
-	}]
+	}
+]
 
 	return (
 		<div className="header">

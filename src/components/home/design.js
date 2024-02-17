@@ -10,7 +10,7 @@ const Design = () => (
                 <img alt="identity"  className="customimg" src="/assets/home/id1.jpg"/>
             </div>
             <div className="col-12 col-md-6 info ">
-                <h3>A Self Sovereign digital identity solution for all your needs.</h3>
+                <h3>A Self Sovereign decentralized identity solution for all your needs.</h3>
             </div>
         </div>
         <div className="row crow">

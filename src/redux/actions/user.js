@@ -152,10 +152,10 @@ export const addId = (issuer , buffer , account , pbk,id) => async dispatch =>{
     }
 }
 
-export const acceptRequest = (num , account ,id) => async dispatch => {
+export const acceptRequest = (num , account ,id , owner) => async dispatch => {
    
     try{
-        const msg = id + " : " + account.toLowerCase(); 
+        const msg = id + " : " + owner.toLowerCase(); 
         const sign = await web3.eth.personal.sign(msg , account);
         await Identity.methods.AcceptIdRequest(num , sign).send({from : account});
     }

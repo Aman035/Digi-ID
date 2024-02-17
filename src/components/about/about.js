@@ -1,7 +1,4 @@
 import './about.css';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import TwitterIcon from '@mui/icons-material/Twitter';
 
 const About = ()=>(
     <div>
@@ -42,9 +39,9 @@ const About = ()=>(
                     (Download from here)
                 </a>
             </p>
-            <p>2.  Some ropston test ethers in your MetaMask Account. 
-                <a href="https://faucet.ropsten.be/" target="_blank" rel="noopener noreferrer">
-                    (Get test ethers from here)
+            <p>2.  Some mumbai test matic in your MetaMask Account. 
+                <a href="https://faucet.polygon.technology/" target="_blank" rel="noopener noreferrer">
+                    (Get test matic from here)
                 </a>
             </p>
         </div>
@@ -61,11 +58,6 @@ const About = ()=>(
             <p>
                 Inspiration has been taken from various research papers and 
                 digital identity models.
-            </p>
-            <p>
-                <a href="https://www.linkedin.com/in/aman-gupta-2001/" target="_blank" rel="noopener noreferrer"><LinkedInIcon className="icon" sx={{fontSize : "35px"}}/></a>
-                <a href="https://github.com/Aman035" target="_blank" rel="noopener noreferrer"><GitHubIcon  className="icon" sx={{fontSize : "35px"}}/></a>
-                <a href="https://twitter.com/m_AmanGupta" target="_blank" rel="noopener noreferrer"><TwitterIcon className="icon" sx={{fontSize : "35px"}}/></a>
             </p>
         </div>
     </div>

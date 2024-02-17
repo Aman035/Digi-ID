@@ -6,6 +6,9 @@ import { updateUserInfo } from './user';
 import { updateRequestInfo } from './issuerRequest';
 import { updateIssuerInfo } from './issuer';
 import { delay } from '../../helper';
+import web3 from '../../web3';
+
+const chainId="80001";
 
 //try connecting to metamask wallet and get account address
 export const trySignin = ()=>async(dispatch)=>{
@@ -27,6 +30,39 @@ export const trySignin = ()=>async(dispatch)=>{
         dispatch(alert(err , "error"));
         return;
     }
+
+    if (window.ethereum.networkVersion !== chainId) {
+        try {
+            await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: web3.utils.toHex(chainId) }]
+            });
+        } catch (err) {
+            // This error code indicates that the chain has not been added to MetaMask
+            if (err.code === 4902) {
+                await window.ethereum.request({
+                    method: 'wallet_addEthereumChain',
+                    params: [
+                        {
+                        chainName: 'Polygon Mumbai',
+                        chainId: web3.utils.toHex(chainId),
+                        nativeCurrency: { name: 'MATIC', decimals: 18, symbol: 'MATIC' },
+                        rpcUrls: ['https://rpc-mumbai.matic.today']
+                        }
+                    ]
+                    });
+                }
+            }
+    }
+
+    await setTimeout(()=> {
+        if(window.ethereum.networkVersion !== chainId){
+            dispatch(authError("Please Switch to Polygon Mumbai Network"));
+            dispatch(alert("Please Switch to Polygon Mumbai Network" , "error"));
+            return;
+        }
+    }, 2000);
+    
 
     try{
         await window.ethereum.request({ method: 'eth_requestAccounts'})
