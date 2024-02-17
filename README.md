@@ -1,70 +1,121 @@
-# Getting Started with Create React App
+[![GitHub contributors](https://img.shields.io/github/contributors/Aman035/Digi-ID?style=for-the-badge)](https://github.com/Aman035/Digi-ID/contributors)
+[![GitHub issues](https://img.shields.io/github/issues/Aman035/Digi-ID?style=for-the-badge)](https://github.com/Aman035/Digi-ID/issues)
+[![GitHub forks](https://img.shields.io/github/forks/Aman035/Digi-ID?style=for-the-badge)](https://github.com/Aman035/Digi-ID/network)
+[![GitHub stars](https://img.shields.io/github/stars/Aman035/Digi-ID?style=for-the-badge)](https://github.com/Aman035/Digi-ID/stargazers)
+[![GitHub license](https://img.shields.io/github/license/Aman035/Digi-ID?style=for-the-badge)](https://github.com/Aman035/Digi-ID/blob/main/LICENSE)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+    <!-- <img src="images/logo.png" alt="Logo" width="80" height="80"> -->
+  <h3 align="center">DIGI ID</h3>
+  <p align="center">
+    <a href="TODO">View Demo</a>
+    ·
+    <a href="https://github.com/Aman035/Digi-ID/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/Aman035/Digi-ID/issues">Request Feature</a>
+  </p>
+</p>
 
-## Available Scripts
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#contract-code">Contract Code</a></li>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li><a href="#installation">Installation</a></li>
+  </ol>
+</details>
 
-In the project directory, you can run:
+<!-- ABOUT THE PROJECT -->
 
-### `yarn start`
+## About The Project
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+DIGI ID’ provides a decentralized identification system.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The project tends to offer a secured application where a user can create any digital identity, encrypt it using his public/private keys and store it on a secure decentralized storage system IPFS. This storage data is published on blockchain in encrypted form using asymmetric encryptions and empowers a user to share these identities securely. Also, the issuers are allowed to digitally sign all the identities for verification of data using the public-private key encryption.
 
-### `yarn test`
+<p align="center">
+<img src="public\assets\flow.png"/>
+</p>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Contract Code
 
-### `yarn build`
+Contract is deployed on Polygon Mumbai testnet.
+Contract Address - [View on PolygonScan](https://mumbai.polygonscan.com/address/0xFbD45EFD350dDC7953F3DbEe9B1E5E233b567845)
+0xFbD45EFD350dDC7953F3DbEe9B1E5E233b567845
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### Built With
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- ReactJS
+- Redux
+- Stylings - Material UI , Bootstrap , React Spring
+- Wallet Integrations - Metamask
+- Solidity
+- Test Cases - Mocha And Chai
+- Deployment - Polygon Mumbai Testnet
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Installation
 
-### `yarn eject`
+1. Clone the repo
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```sh
+git clone https://github.com/Aman035/Digi-ID.git
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Frontend
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+1.2. Install NPM packages
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```sh
+npm install
+```
 
-## Learn More
+1.3. Start the React App
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```sh
+npm start
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### Contracts
 
-### Code Splitting
+2.2 Go to Contract Directory
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```sh
+cd contract
+```
 
-### Analyzing the Bundle Size
+2.2 Insall packages using truffle
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```sh
+truffle init
+```
 
-### Making a Progressive Web App
+1.2. For running test cases start local test net Instance on port 8545 using Ganache
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```sh
+truffle test
+```
 
-### Advanced Configuration
+1.3. To compile the contarcts
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```sh
+truffle compile
+```
 
-### Deployment
+1.3. To deploy the contracts add a .env file with the following variables
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```sh
+PRIVATE_KEY=YOUR_ETHEREUM_ACCOUNT_PRIVATE_KEY
+NETWORK=RPC_URL_OF_NETWORK
+```
 
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```sh
+truffle deploy --network NEWTWORK_NAME
+```
