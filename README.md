@@ -10,7 +10,7 @@
     <!-- <img src="images/logo.png" alt="Logo" width="80" height="80"> -->
   <h3 align="center">DIGI ID</h3>
   <p align="center">
-    <a href="TODO">View Demo</a>
+    <a href="https://digiid.netlify.app/#/home">View Demo</a>
     ·
     <a href="https://github.com/Aman035/Digi-ID/issues">Report Bug</a>
     ·
