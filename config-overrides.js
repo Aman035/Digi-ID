@@ -33,6 +33,9 @@ module.exports = function override(config) {
       {
         module: /node_modules\/@metamask/,
       },
+      {
+        module: /node_modules\/web3/,
+      },
     ],
   }
 }
